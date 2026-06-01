@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Login - Barbearia</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background: linear-gradient(135deg, #111, #2b2b2b);
+        }
+
+        .login-container{
+            width:380px;
+            background:#1c1c1c;
+            padding:40px;
+            border-radius:16px;
+            box-shadow:0 0 25px rgba(0,0,0,0.5);
+            color:white;
+        }
+
+        .logo{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .logo h1{
+            color:#d4af37;
+            font-size:32px;
+            margin-bottom:5px;
+        }
+
+        .logo p{
+            color:#ccc;
+            font-size:14px;
+        }
+
+        .input-group{
+            margin-bottom:20px;
+        }
+
+        .input-group label{
+            display:block;
+            margin-bottom:8px;
+            color:#ddd;
+        }
+
+        .input-group input{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#2b2b2b;
+            color:white;
+            font-size:15px;
+            outline:none;
+            transition:0.3s;
+        }
+
+        .input-group input:focus{
+            border:1px solid #d4af37;
+            box-shadow:0 0 8px rgba(212,175,55,0.4);
+        }
+
+        .btn-login{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#d4af37;
+            color:black;
+            font-weight:bold;
+            font-size:16px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .btn-login:hover{
+            background:#f1c94a;
+            transform:scale(1.02);
+        }
+
+        .extra{
+            margin-top:18px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        .extra a{
+            color:#d4af37;
+            text-decoration:none;
+        }
+
+        .extra a:hover{
+            text-decoration:underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <h1>BARBEARIA</h1>
+        <p>Sistema da Barbearia D+</p>
+    </div>
+
+    <form>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="Digite seu email">
+        </div>
+
+        <div class="input-group">
+            <label>Senha</label>
+            <input type="password" placeholder="Digite sua senha">
+        </div>
+
+        {!<button class="btn-login" type="submit">!}
+            {!Entrar!}
+        {!</button>!}
+        <button class="btn-login" type="button" onclick="window.location.href='/telaAgendamento/AgendamentoUsuario'">
+            Entrar Temporario
+        </button>
+
+        <div class="extra">
+            <p>Esqueceu sua senha? <a href="">Recuperar</a></p>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

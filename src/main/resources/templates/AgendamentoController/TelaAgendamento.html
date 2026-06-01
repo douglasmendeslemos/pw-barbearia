@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento</title>
+</head>
+<body>
+<h2>Agendar Serviço</h2>
+
+<form action="/agendar" method="post">
+
+    <label>Serviço:</label>
+    <select name="servico">
+        <option value="1">Corte - R$30</option>
+        <option value="2">Barba - R$20</option>
+    </select>
+
+    <br><br>
+
+    <label>Barbeiro:</label>
+    <select name="barbeiro">
+        <option value="1">João</option>
+        <option value="2">Carlos</option>
+    </select>
+
+    <br><br>
+
+    <label>Data e Hora:</label>
+    <input type="datetime-local" name="dataHora">
+
+    <br><br>
+
+    <button type="submit">Agendar</button>
+</form>
+</body>
+</html>
