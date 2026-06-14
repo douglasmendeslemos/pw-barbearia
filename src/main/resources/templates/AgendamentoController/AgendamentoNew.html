@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Agendamentos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-page">
+<aside class="sidebar">
+    <div class="logo">
+        <h1>Barbearia D+</h1>
+    </div>
+
+    <nav class="menu" aria-label="Menu principal">
+        <a href="/agendamentos">Dashboard</a>
+        <a href="/agendamentos">Agendamentos</a>
+        <a href="#">Clientes</a>
+        <a href="#">Servicos</a>
+        <a href="#">Barbeiros</a>
+        <a href="#">Relatorios</a>
+    </nav>
+</aside>
+
+<main class="content">
+    <header class="topo">
+        <h2>Visao Geral</h2>
+        <button class="btn-agendar" type="button" data-toggle-form>
+            + Novo Agendamento
+        </button>
+    </header>
+
+    <section id="boxFormulario" class="area-formulario" aria-label="Formulario de agendamento">
+        <form action="#" method="post">
+            <div id="tela1" class="etapa ativa">
+                <h3>Passo 1: Dados do Cliente</h3>
+
+                <label for="clienteNome">Nome completo</label>
+                <input id="clienteNome" name="clienteNome" type="text" required placeholder="Digite o nome">
+
+                <label for="clienteWhatsapp">WhatsApp</label>
+                <input id="clienteWhatsapp" name="clienteWhatsapp" type="tel" required placeholder="(00) 00000-0000">
+
+                <button type="button" class="btn-agendar" data-step-target="tela2">
+                    Avancar para detalhes
+                </button>
+            </div>
+
+            <div id="tela2" class="etapa">
+                <h3>Passo 2: Detalhes do Agendamento</h3>
+
+                <label for="dataAgendamento">Data</label>
+                <input id="dataAgendamento" name="dataAgendamento" type="date" required>
+
+                <label for="horarioAgendamento">Horario</label>
+                <select id="horarioAgendamento" name="horarioAgendamento" required>
+                    <option value="">Selecione...</option>
+                    <option>09:00</option>
+                    <option>10:00</option>
+                    <option>14:00</option>
+                </select>
+
+                <label for="servicoAgendamento">Servico</label>
+                <select id="servicoAgendamento" name="servicoAgendamento" required>
+                    <option value="">Selecione...</option>
+                    <option>Corte e barba</option>
+                    <option>Corte classico</option>
+                    <option>Barba</option>
+                </select>
+
+                <div class="actions">
+                    <button type="button" class="btn-secundario" data-step-target="tela1">
+                        Voltar
+                    </button>
+                    <button type="submit" class="btn-agendar">
+                        Confirmar agendamento
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="cards" aria-label="Resumo do dia">
+        <article class="card">
+            <h3>Agendamentos Hoje</h3>
+            <p>14</p>
+        </article>
+        <article class="card">
+            <h3>Faturamento</h3>
+            <p>R$ 1.250</p>
+        </article>
+        <article class="card">
+            <h3>Novos Clientes</h3>
+            <p>3</p>
+        </article>
+    </section>
+
+    <section class="tabela">
+        <h3>Proximos Horarios</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Servico</th>
+                <th>Horario</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Carlos Mendes</td>
+                <td>Corte classico</td>
+                <td>09:00</td>
+                <td><span class="status confirmado">Confirmado</span></td>
+            </tr>
+            <tr>
+                <td>Rafael Silva</td>
+                <td>Barba</td>
+                <td>10:00</td>
+                <td><span class="status pendente">Pendente</span></td>
+            </tr>
+            <tr>
+                <td>Joao Paulo</td>
+                <td>Corte e barba</td>
+                <td>11:30</td>
+                <td><span class="status confirmado">Confirmado</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script src="/js/agendamento.js"></script>
+</body>
+</html>

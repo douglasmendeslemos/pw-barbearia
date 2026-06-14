@@ -4,21 +4,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "clientes")
+@Getter
+@Setter
 public class ClienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private Integer id;
-    @Getter @Setter
-    private String nome;
-    @Getter @Setter
-    private String telefone;
-    @Getter @Setter
-    private String email;
 
+    private String nome;
+
+    private String telefone;
+
+    private String email;
 }
