@@ -45,6 +45,10 @@ a {
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
 }
 
+.cadastro-container {
+    width: min(460px, calc(100vw - 32px));
+}
+
 .login-container .logo {
     margin-bottom: 30px;
 }
@@ -125,6 +129,34 @@ a {
 .extra a {
     color: #d4af37;
     text-decoration: none;
+}
+
+.extra p + p {
+    margin-top: 8px;
+}
+
+.alert {
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+.alert-error {
+    color: #ffdada;
+    background: rgba(180, 45, 45, 0.24);
+    border: 1px solid rgba(240, 99, 99, 0.35);
+}
+
+.alert-success {
+    color: #dfffe3;
+    background: rgba(48, 135, 67, 0.24);
+    border: 1px solid rgba(92, 196, 114, 0.35);
 }
 
 .dashboard-page {
