@@ -1,0 +1,393 @@
+/* ============================================================== */
+/* 1. VARIÁVEIS GLOBAIS E TEMA (Do seu primeiro ficheiro)         */
+/* ============================================================== */
+:root {
+  --bg: #f7f3ed;
+  --surface: #fffaf2;
+  --ink: #211a16;
+  --muted: #75695f;
+  --line: #ded2c3;
+  --brand: #9b2c2c;
+  --brand-strong: #681f1f;
+  --accent: #176b64;
+  --gold: #c89437;
+  --shadow: 0 18px 50px rgba(40, 28, 20, 0.14);
+}
+
+/* ============================================================== */
+/* 2. RESET E ESTILOS BASE                                        */
+/* ============================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ============================================================== */
+/* 3. COMPONENTES COMUNS (Logos, Botões, Alertas, Formulários)    */
+/* ============================================================== */
+.logo {
+  text-align: center;
+}
+
+.logo h1 {
+  color: var(--brand);
+  font-size: 32px;
+  font-family: Georgia, "Times New Roman", serif;
+  margin-bottom: 5px;
+}
+
+.logo p, .brand small, .eyebrow {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.button, .btn-login, .btn-agendar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: 0.3s;
+}
+
+.button.primary, .btn-login, .btn-agendar {
+  color: #fff;
+  background: var(--brand);
+}
+
+.button.primary:hover, .btn-login:hover, .btn-agendar:hover {
+  background: var(--brand-strong);
+  transform: scale(1.02);
+}
+
+.button.ghost, .btn-secundario {
+  color: var(--ink);
+  border-color: var(--line);
+  background: #fff8ee;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.button.ghost:hover, .btn-secundario:hover {
+  background: #efe5d8;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffdf8;
+  color: var(--ink);
+  padding: 10px 12px;
+  transition: 0.3s;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 3px solid rgba(23, 107, 100, 0.18);
+  border-color: var(--accent);
+}
+
+.alert {
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.alert-error {
+  color: #842029;
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+}
+
+.alert-success {
+  color: #0f5132;
+  background: #d1e7dd;
+  border: 1px solid #badbcc;
+}
+
+/* ============================================================== */
+/* 4. LANDING PAGE (Topo, Hero, Serviços - Do ficheiro 1)         */
+/* ============================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+  padding: 12px clamp(18px, 4vw, 56px);
+  background: rgba(247, 243, 237, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  background: var(--brand);
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.brand strong { display: block; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.nav a:hover {
+  color: var(--ink);
+  background: #efe5d8;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 80px);
+  min-height: calc(100vh - 72px);
+  padding: clamp(44px, 7vw, 86px) clamp(18px, 5vw, 72px) 34px;
+  overflow: hidden;
+}
+
+.hero-copy { max-width: 760px; }
+
+.hero h1 {
+  max-width: 820px;
+  margin: 10px 0 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 6vw, 5.8rem);
+  line-height: 0.96;
+}
+
+.hero-text {
+  max-width: 610px;
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 520px;
+  border: 1px solid rgba(33, 26, 22, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(23, 107, 100, 0.14), transparent 34%),
+    linear-gradient(0deg, #241914 0 34%, transparent 34%),
+    #ead9c1;
+  box-shadow: var(--shadow);
+}
+
+.barber-pole {
+  position: absolute;
+  top: 42px;
+  right: 54px;
+  width: 52px;
+  height: 330px;
+  border: 8px solid #2a211b;
+  border-radius: 28px;
+  background: repeating-linear-gradient(135deg, #fff 0 22px, #a92626 22px 44px, #fff 44px 66px, #176b64 66px 88px);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.55);
+}
+
+/* Cadeira e Ferramentas (mantidas exatamente como no original) */
+.chair { position: absolute; left: 50%; bottom: 78px; width: 250px; height: 300px; transform: translateX(-50%); }
+.chair span { position: absolute; display: block; }
+.chair-back { left: 42px; top: 0; width: 166px; height: 196px; border-radius: 34px 34px 18px 18px; background: linear-gradient(135deg, #2c211c, #5a3427); border: 10px solid #1d1612; }
+.chair-seat { left: 0; top: 172px; width: 250px; height: 72px; border-radius: 20px; background: #1f1713; }
+.chair-base { left: 106px; top: 232px; width: 38px; height: 68px; background: var(--gold); }
+.chair-base::after { content: ""; position: absolute; left: -58px; bottom: 0; width: 154px; height: 18px; border-radius: 14px; background: #715018; }
+.tool-row { position: absolute; left: 30px; bottom: 34px; display: flex; align-items: end; gap: 18px; }
+.comb, .razor, .scissors { display: block; }
+.comb { width: 86px; height: 30px; border-top: 8px solid #251b16; background: repeating-linear-gradient(90deg, #251b16 0 4px, transparent 4px 9px); }
+.razor { width: 92px; height: 14px; background: var(--accent); transform: rotate(-18deg); }
+.razor::after { content: ""; position: absolute; right: -20px; top: -6px; width: 26px; height: 26px; border-radius: 50%; background: #241914; }
+.scissors { position: relative; width: 74px; height: 42px; }
+.scissors::before, .scissors::after { content: ""; position: absolute; width: 28px; height: 28px; border: 5px solid #251b16; border-radius: 50%; bottom: 0; }
+.scissors::before { left: 0; }
+.scissors::after { right: 0; }
+
+.section, .workspace { padding: 58px clamp(18px, 5vw, 72px); }
+.muted { background: #efe5d8; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.section-heading h2, .schedule-header h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.9rem, 3vw, 3rem); }
+
+.service-grid, .barber-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.service-card, .barber-card { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: 0 10px 26px rgba(44, 31, 22, 0.08); padding: 18px; }
+.service-card h3, .barber-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.service-card p, .barber-card p { min-height: 48px; margin: 0 0 14px; color: var(--muted); }
+.meta { display: flex; justify-content: space-between; gap: 12px; color: var(--brand); font-weight: 800; }
+.avatar { display: grid; place-items: center; width: 58px; height: 58px; margin-bottom: 14px; border-radius: 8px; color: #fff; background: var(--accent); font-weight: 900; }
+
+/* ============================================================== */
+/* 5. TELA DE LOGIN (Do ficheiro 2, adaptada ao tema claro)       */
+/* ============================================================== */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg); /* Unificado */
+}
+
+.login-container {
+  width: min(380px, calc(100vw - 32px));
+  background: var(--surface);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+
+.cadastro-container {
+  width: min(460px, calc(100vw - 32px));
+}
+
+.login-container .logo {
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.extra {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.extra a {
+  color: var(--brand);
+  font-weight: bold;
+}
+
+/* ============================================================== */
+/* 6. DASHBOARD (Menu, Cards, Tabelas - Do ficheiro 2 adaptado)   */
+/* ============================================================== */
+.dashboard-page {
+  display: flex;
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--surface);
+  padding: 30px 20px;
+  border-right: 1px solid var(--line);
+}
+
+.sidebar .logo {
+  margin-bottom: 40px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu a {
+  padding: 14px;
+  border-radius: 10px;
+  transition: 0.3s;
+  font-weight: bold;
+  color: var(--muted);
+}
+
+.menu a:hover, .menu a.ativo {
+  background: #efe5d8;
+  color: var(--ink);
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16

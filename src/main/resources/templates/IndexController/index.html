@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barbearia Prime | Agendamento</title>
+  <link rel="stylesheet" href="css/styleIndex.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#agenda" aria-label="Barbearia Prime">
+      <span class="brand-mark">BP</span>
+      <span>
+        <strong>Barbearia Prime</strong>
+        <small>agenda online</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+        <a href="#servicos">Serviços</a>
+        <a href="#barbeiros">Barbeiros</a>
+        <a href="/usuarios/cadastro">Agendar</a>
+        <a href="/login">Realizar Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Sistema de agendamento</p>
+        <h1 id="hero-title">Cortes, barba e horários organizados em poucos cliques.</h1>
+        <p class="hero-text">Escolha o serviço, o profissional e o melhor horário. O atendimento fica registrado no painel da barbearia.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#agenda">Agendar horário</a>
+          <a class="button ghost" href="#painel">Ver agenda do dia</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="barber-pole"></div>
+        <div class="chair">
+          <span class="chair-back"></span>
+          <span class="chair-seat"></span>
+          <span class="chair-base"></span>
+        </div>
+        <div class="tool-row">
+          <span class="comb"></span>
+          <span class="razor"></span>
+          <span class="scissors"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicos" aria-labelledby="services-title">
+      <div class="section-heading">
+        <p class="eyebrow">Catálogo</p>
+        <h2 id="services-title">Serviços disponíveis</h2>
+      </div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </section>
+
+    <section class="section muted" id="barbeiros" aria-labelledby="barbers-title">
+      <div class="section-heading">
+        <p class="eyebrow">Equipe</p>
+        <h2 id="barbers-title">Profissionais</h2>
+      </div>
+      <div class="barber-grid" id="barberGrid"></div>
+    </section>
+
+    <section class="workspace" id="agenda" aria-labelledby="booking-title">
+      <form class="booking-panel" id="bookingForm">
+        <div class="section-heading compact">
+          <p class="eyebrow">Novo horário</p>
+          <h2 id="booking-title">Agendar atendimento</h2>
+        </div>
+
+        <label>
+          Nome do cliente
+          <input type="text" id="clientName" placeholder="Ex.: João Silva" autocomplete="name" required>
+        </label>
+
+        <label>
+          Telefone
+          <input type="tel" id="clientPhone" placeholder="(00) 00000-0000" autocomplete="tel" required>
+        </label>
+
+        <label>
+          Serviço
+          <select id="serviceSelect" required></select>
+        </label>
+
+        <label>
+          Barbeiro
+          <select id="barberSelect" required></select>
+        </label>
+
+        <div class="form-row">
+          <label>
+            Data
+            <input type="date" id="bookingDate" required>
+          </label>
+
+          <label>
+            Horário
+            <select id="bookingTime" required></select>
+          </label>
+        </div>
+
+        <label>
+          Observações
+          <textarea id="bookingNotes" rows="3" placeholder="Preferência de corte, alergias, detalhes do atendimento"></textarea>
+        </label>
+
+        <button class="button primary submit" type="submit">Confirmar agendamento</button>
+      </form>
+
+      <aside class="schedule-panel" id="painel" aria-labelledby="schedule-title">
+        <div class="schedule-header">
+          <div>
+            <p class="eyebrow">Painel</p>
+            <h2 id="schedule-title">Agenda do dia</h2>
+          </div>
+          <button class="icon-button" id="clearSchedule" type="button" title="Limpar agenda" aria-label="Limpar agenda">
+            ×
+          </button>
+        </div>
+
+        <div class="stats">
+          <div>
+            <strong id="totalAppointments">0</strong>
+            <span>horários</span>
+          </div>
+          <div>
+            <strong id="dayRevenue">R$ 0</strong>
+            <span>previsto</span>
+          </div>
+        </div>
+
+        <div class="appointment-list" id="appointmentList"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

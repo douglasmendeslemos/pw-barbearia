@@ -12,7 +12,7 @@ class IndexControllerTest {
     @Test
     void deveCarregarTelaDeLogin() {
         given()
-                .when().get("/")
+                .when().get("/login")
                 .then()
                 .statusCode(200)
                 .body(containsString("BARBEARIA"));

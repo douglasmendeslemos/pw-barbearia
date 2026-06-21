@@ -1,17 +1,12 @@
 package ifg.edu.br.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "usuarios_bd")
+@Table(name = "tbusuarios")
 @Data
 public class UsuarioEntity {
 
@@ -27,4 +22,9 @@ public class UsuarioEntity {
 
     @Column(nullable = false, name = "senha_hash", length = 64)
     private String senhaHash;
+
+    @ManyToOne
+    @JoinColumn(name = "perfil_id", nullable = false)
+    @Getter @Setter
+    private PerfilEntity perfil;
 }

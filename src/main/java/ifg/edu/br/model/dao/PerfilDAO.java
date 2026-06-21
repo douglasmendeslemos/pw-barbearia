@@ -23,18 +23,9 @@ public class PerfilDAO {
         return entityManager.find(PerfilEntity.class, id);
     }
 
-    public List<PerfilEntity> listAll(){
-        //language=jpql
-        String hql = "SELECT p FROM PerfilEntity p";
-
-        return entityManager
-                .createQuery(hql)
-                .getResultList();
-    }
-
     public List<String> listAllNames(){
         //language=hql
-        String hql = "SELECT p.nome FROM PerfilEntity p";
+        String hql = "SELECT p.nomePerfil FROM PerfilEntity p";
         return entityManager
                 .createQuery(hql)
                 .getResultList();

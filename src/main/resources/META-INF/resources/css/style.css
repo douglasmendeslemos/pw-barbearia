@@ -1,3 +1,22 @@
+/* ============================================================== */
+/* VARIÁVEIS DE COR (Importadas do ficheiro Styles.css)           */
+/* ============================================================== */
+:root {
+    --bg: #f7f3ed;
+    --surface: #fffaf2;
+    --ink: #211a16;
+    --muted: #75695f;
+    --line: #ded2c3;
+    --brand: #9b2c2c;
+    --brand-strong: #681f1f;
+    --accent: #176b64;
+    --gold: #c89437;
+    --shadow: 0 18px 50px rgba(40, 28, 20, 0.14);
+}
+
+/* ============================================================== */
+/* ESTILOS GERAIS                                                 */
+/* ============================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,12 +26,13 @@
 
 body {
     min-height: 100vh;
-    background: #121212;
-    color: white;
+    background: var(--bg);
+    color: var(--ink);
 }
 
 a {
     color: inherit;
+    text-decoration: none;
 }
 
 .logo {
@@ -20,29 +40,38 @@ a {
 }
 
 .logo h1 {
-    color: #d4af37;
+    color: var(--brand);
     font-size: 32px;
     margin-bottom: 5px;
+    font-family: Georgia, "Times New Roman", serif;
 }
 
 .logo p {
-    color: #ccc;
+    color: var(--muted);
     font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* ============================================================== */
+/* TELA DE LOGIN E CADASTRO                                       */
+/* ============================================================== */
 .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #111, #2b2b2b);
+    /* Fundo suave em vez do gradiente escuro */
+    background: var(--bg);
 }
 
 .login-container {
     width: min(380px, calc(100vw - 32px));
-    background: #1c1c1c;
+    background: var(--surface);
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
 }
 
 .cadastro-container {
@@ -61,7 +90,8 @@ a {
 .area-formulario label {
     display: block;
     margin-bottom: 8px;
-    color: #ddd;
+    color: var(--muted);
+    font-weight: bold;
 }
 
 .input-group input,
@@ -69,10 +99,10 @@ a {
 .area-formulario select {
     width: 100%;
     padding: 14px;
-    border: 1px solid transparent;
+    border: 1px solid var(--line);
     border-radius: 10px;
-    background: #2b2b2b;
-    color: white;
+    background: #fffdf8;
+    color: var(--ink);
     font-size: 15px;
     outline: none;
     transition: 0.3s;
@@ -81,15 +111,14 @@ a {
 .area-formulario input,
 .area-formulario select {
     margin-bottom: 20px;
-    border-color: #333;
-    background: #242424;
 }
 
+/* Efeito de foco nos campos de texto */
 .input-group input:focus,
 .area-formulario input:focus,
 .area-formulario select:focus {
-    border-color: #d4af37;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+    border-color: var(--accent);
+    outline: 3px solid rgba(23, 107, 100, 0.18);
 }
 
 .btn-login,
@@ -104,8 +133,8 @@ a {
 
 .btn-login,
 .btn-agendar {
-    background: #d4af37;
-    color: black;
+    background: var(--brand);
+    color: #fff;
 }
 
 .btn-login {
@@ -116,7 +145,7 @@ a {
 
 .btn-login:hover,
 .btn-agendar:hover {
-    background: #f1c94a;
+    background: var(--brand-strong);
     transform: scale(1.02);
 }
 
@@ -127,8 +156,12 @@ a {
 }
 
 .extra a {
-    color: #d4af37;
-    text-decoration: none;
+    color: var(--brand);
+    font-weight: bold;
+}
+
+.extra a:hover {
+    color: var(--brand-strong);
 }
 
 .extra p + p {
@@ -148,17 +181,20 @@ a {
 }
 
 .alert-error {
-    color: #ffdada;
-    background: rgba(180, 45, 45, 0.24);
-    border: 1px solid rgba(240, 99, 99, 0.35);
+    color: #842029;
+    background: #f8d7da;
+    border: 1px solid #f5c2c7;
 }
 
 .alert-success {
-    color: #dfffe3;
-    background: rgba(48, 135, 67, 0.24);
-    border: 1px solid rgba(92, 196, 114, 0.35);
+    color: #0f5132;
+    background: #d1e7dd;
+    border: 1px solid #badbcc;
 }
 
+/* ============================================================== */
+/* PAINEL (DASHBOARD) E MENU LATERAL                              */
+/* ============================================================== */
 .dashboard-page {
     display: flex;
 }
@@ -166,9 +202,9 @@ a {
 .sidebar {
     width: 260px;
     min-height: 100vh;
-    background: #1b1b1b;
+    background: var(--surface);
     padding: 30px 20px;
-    border-right: 1px solid #2f2f2f;
+    border-right: 1px solid var(--line);
 }
 
 .sidebar .logo {
@@ -183,17 +219,17 @@ a {
 
 .menu a {
     text-decoration: none;
-    color: #ddd;
+    color: var(--muted);
     padding: 14px;
     border-radius: 10px;
     transition: 0.3s;
-    background: #242424;
+    background: transparent;
+    font-weight: bold;
 }
 
 .menu a:hover {
-    background: #d4af37;
-    color: black;
-    font-weight: bold;
+    background: #efe5d8;
+    color: var(--ink);
 }
 
 .content {
@@ -211,12 +247,17 @@ a {
 
 .topo h2 {
     font-size: 32px;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
 }
 
 .btn-agendar {
     padding: 14px 20px;
 }
 
+/* ============================================================== */
+/* CARDS E ÁREAS DE CONTEÚDO                                      */
+/* ============================================================== */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -227,9 +268,10 @@ a {
 .card,
 .tabela,
 .area-formulario {
-    background: #1e1e1e;
-    border-radius: 16px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: 0 10px 26px rgba(44, 31, 22, 0.08);
+    border: 1px solid var(--line);
 }
 
 .card {
@@ -237,16 +279,20 @@ a {
 }
 
 .card h3 {
-    color: #bdbdbd;
+    color: var(--muted);
     margin-bottom: 10px;
+    font-size: 1.05rem;
 }
 
 .card p {
     font-size: 32px;
-    color: #d4af37;
+    color: var(--brand);
     font-weight: bold;
 }
 
+/* ============================================================== */
+/* FORMULÁRIO DE AGENDAMENTO MULTI-ETAPAS                         */
+/* ============================================================== */
 .area-formulario {
     display: none;
     padding: 25px;
@@ -259,8 +305,9 @@ a {
 }
 
 .area-formulario h3 {
-    color: #d4af37;
+    color: var(--brand);
     margin-bottom: 20px;
+    font-family: Georgia, "Times New Roman", serif;
 }
 
 .etapa {
@@ -274,18 +321,27 @@ a {
 }
 
 .btn-secundario {
-    background: #242424;
-    color: white;
-    border: 1px solid #333;
+    background: #fff8ee;
+    color: var(--ink);
+    border: 1px solid var(--line);
     padding: 10px 15px;
 }
 
+.btn-secundario:hover {
+    background: #efe5d8;
+}
+
+/* ============================================================== */
+/* TABELA DE LISTAGEM                                             */
+/* ============================================================== */
 .tabela {
     padding: 25px;
 }
 
 .tabela h3 {
     margin-bottom: 20px;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
 }
 
 table {
@@ -297,25 +353,31 @@ th,
 td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--line);
 }
 
 th {
-    color: #d4af37;
+    color: var(--brand);
+    font-weight: bold;
 }
 
 tr:hover {
-    background: #2a2a2a;
+    background: #efe5d8;
 }
 
 .status.confirmado {
-    color: #4caf50;
+    color: var(--accent); /* Verde Teal do tema */
+    font-weight: bold;
 }
 
 .status.pendente {
-    color: #ffc107;
+    color: var(--gold); /* Dourado escuro do tema */
+    font-weight: bold;
 }
 
+/* ============================================================== */
+/* RESPONSIVIDADE                                                 */
+/* ============================================================== */
 @media (max-width: 900px) {
     .dashboard-page {
         flex-direction: column;
@@ -323,14 +385,4 @@ tr:hover {
 
     .sidebar {
         width: 100%;
-        min-height: auto;
-        border-right: none;
-        border-bottom: 1px solid #2f2f2f;
-    }
-
-    .topo,
-    .actions {
-        align-items: stretch;
-        flex-direction: column;
-    }
-}
+        min-
