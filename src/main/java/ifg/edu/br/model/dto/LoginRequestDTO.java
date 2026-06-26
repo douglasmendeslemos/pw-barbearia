@@ -10,6 +10,4 @@ public record LoginRequestDTO(
     @NotBlank
     String senha
 ) {
-
-
 }

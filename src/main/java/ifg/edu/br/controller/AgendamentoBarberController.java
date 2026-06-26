@@ -7,18 +7,17 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-
-public class LoginController {
+@Path("/agendamentoBarber")
+public class AgendamentoBarberController {
 
     @CheckedTemplate
     public static class Templates {
-        public static native TemplateInstance login();
+        public static native TemplateInstance AgendamentoBarber();
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance login() {
-        return Templates.login();
+    public TemplateInstance AgendamentoBarber() {
+        return Templates.AgendamentoBarber();
     }
-
 }

@@ -1,10 +1,14 @@
 package ifg.edu.br.model.bo;
 
 import ifg.edu.br.model.dao.UsuarioDAO;
+import ifg.edu.br.model.dto.AuthResultadoDTO;
+import ifg.edu.br.model.dto.LoginRequestDTO;
 import ifg.edu.br.model.dto.UsuarioDTO;
+import ifg.edu.br.model.entity.PerfilEntity;
 import ifg.edu.br.model.entity.UsuarioEntity;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,6 +20,30 @@ public class UsuarioBO {
     @Inject
     UsuarioDAO usuarioDAO;
 
+
+    public AuthResultadoDTO realizarLogin(LoginRequestDTO loginRequestDTO) {
+
+        UsuarioEntity usuario = usuarioDAO.buscarPorEmail(loginRequestDTO.email());
+        if (usuario == null || !usuario.isAtivo()) {
+            throw new WebApplicationException("login inválido", 401);
+        }
+
+        boolean senha = BcryptUtil.matches(loginRequestDTO.senha(), usuario.getSenha());
+
+        if (!senha) {
+            throw new WebApplicationException("login inválido", 401);
+        }
+
+        String token = Jwt.issuer("https://inventario.ifg.br")
+                .upn(usuario.getEmail()) //email do usuário logado
+                .groups(usuario.getPerfil().name()) // Perfil do usuário, grupo que ele faz parte
+                .claim("id", usuario.getId()) // Recupera a Id do usuário com uma chamada rotulada
+                .expiresIn(3600) // 1 hora em segundos
+                .sign(); //Assina digitalmente e gera a string final
+
+        return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().name());
+
+    }
 
     public String cadastrarUsuario(UsuarioDTO usuarioDTO) {
         String erro = validar(usuarioDTO);
@@ -29,7 +57,16 @@ public class UsuarioBO {
         usuario.setEmail(usuarioDTO.getEmail().trim().toLowerCase());
         usuario.setSenhaHash(gerarHash(usuarioDTO.getSenha()));
 
-        usuarioDAO.salvar(usuario); 
+        // ==========================================
+        // CORREÇÃO: Definindo o perfil padrão (ID 5)
+        // ==========================================
+        PerfilEntity perfilCliente = new PerfilEntity();
+        perfilCliente.setId(5L);
+
+        usuario.setPerfil(perfilCliente);
+        // ==========================================
+
+        usuarioDAO.salvar(usuario);
 
         return null;
     }

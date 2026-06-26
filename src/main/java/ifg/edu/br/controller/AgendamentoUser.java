@@ -7,17 +7,18 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/agendamentos")
-public class AgendamentoController {
+@Path("/agendamentoUser")
+public class AgendamentoUser {
 
     @CheckedTemplate
     public static class Templates {
-        public static native TemplateInstance AgendamentoNew();
+        public static native TemplateInstance AgendamentoUser();
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance listar() {
-        return Templates.AgendamentoNew();
+    public TemplateInstance AgendamentoUser() {
+        return Templates.AgendamentoUser();
     }
+
 }

@@ -26,5 +26,31 @@ function salvar(){
         .catch(function (erro) {
             console.error("Erro ao enviar:", erro);
         });
+}
 
+async function fazerLogin(){
+    const email = document.getElementById('email').value
+    const senha = document.getElementById('senha').value
+
+    const loginResquestDTO = {
+        email: email,
+        senha: senha
+    };
+
+    try{
+        const resposta = await fetch('/auth/login', {
+            method: 'POST', headers:{ 'Content-type': 'aplication/json'}, body: JSON.stringify(loginResquestDTO)
+        } );if (!resposta.ok) {
+            alert("Credenciais inválidas");
+            return;
+        }
+        const dados = await resposta.json();
+        sessionStorage.setItem('nome', dados.nome);
+        sessionStorage.setItem('perfil', dados.perfil);
+
+        window.location.href = "/dashboard"
+    } catch (erro) {
+        console.error("Erro ao conectar com o servidor", erro);
+        alert("O servidor está fora do ar.")
+    }
 }

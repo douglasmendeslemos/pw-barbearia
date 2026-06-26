@@ -39,7 +39,7 @@ public class UsuarioController {
     }
 
     @POST
-    @Path("/cadastro")
+    @Path("/cadastro/api")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
     public Response salvar(@BeanParam UsuarioDTO usuarioDTO) {
