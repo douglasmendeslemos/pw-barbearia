@@ -5,6 +5,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @ApplicationScoped
 public class UsuarioDAO {
@@ -25,5 +27,15 @@ public class UsuarioDAO {
                 .getSingleResult();
 
         return total > 0;
+    }
+
+    public UsuarioEntity buscarPorEmail(String email) {
+        //language=jpql
+        String hql = "SELECT u FROM UsuarioEntity u WHERE u.email = :email";
+        return (UsuarioEntity) entityManager
+                .createQuery(hql)
+                .setParameter("email", email)
+                .getResultStream().findFirst() //Retorna primeira opção encontrada ou null
+                .orElse(null);
     }
 }

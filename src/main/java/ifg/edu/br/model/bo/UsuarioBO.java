@@ -6,9 +6,11 @@ import ifg.edu.br.model.dto.LoginRequestDTO;
 import ifg.edu.br.model.dto.UsuarioDTO;
 import ifg.edu.br.model.entity.PerfilEntity;
 import ifg.edu.br.model.entity.UsuarioEntity;
+import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
+import io.quarkus.elytron.security.common.BcryptUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -24,24 +26,24 @@ public class UsuarioBO {
     public AuthResultadoDTO realizarLogin(LoginRequestDTO loginRequestDTO) {
 
         UsuarioEntity usuario = usuarioDAO.buscarPorEmail(loginRequestDTO.email());
-        if (usuario == null || !usuario.isAtivo()) {
+        if (usuario == null) {
             throw new WebApplicationException("login inválido", 401);
         }
 
-        boolean senha = BcryptUtil.matches(loginRequestDTO.senha(), usuario.getSenha());
+        boolean senha = BcryptUtil.matches(loginRequestDTO.senha(), usuario.getSenhaHash());
 
         if (!senha) {
             throw new WebApplicationException("login inválido", 401);
         }
 
-        String token = Jwt.issuer("https://inventario.ifg.br")
+        String token = Jwt.issuer("https://barbearia.ifg.br")
                 .upn(usuario.getEmail()) //email do usuário logado
-                .groups(usuario.getPerfil().name()) // Perfil do usuário, grupo que ele faz parte
+                .groups(usuario.getPerfil().getNomePerfil()) // Perfil do usuário, grupo que ele faz parte
                 .claim("id", usuario.getId()) // Recupera a Id do usuário com uma chamada rotulada
                 .expiresIn(3600) // 1 hora em segundos
                 .sign(); //Assina digitalmente e gera a string final
 
-        return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().name());
+        return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().getNomePerfil());
 
     }
 
