@@ -34,7 +34,7 @@
 
     <div id="mensagemCadastro" class="alert hidden" role="status" aria-live="polite"></div>
 
-    <form id="formCadastroServico" action="/agendamentoBarbeiro/servicos/save" method="post">
+    <form id="formCadastroServico" action="/servicos/api" method="post">
         <div class="input-group">
             <label for="nome">Nome Servico:</label>
             <input id="nome" name="nome" type="text" placeholder="Digite o nome do serviço" required>
@@ -52,16 +52,16 @@
 
         <div class="input-group">
             <label for="valorServico">Preço</label>
-            <input id="valorServico" name="valorServico" type="password" placeholder="R$" required>
+            <input id="valor" name="valorServico" type="valor" placeholder="R$" required>
         </div>
 
-        <button class="btn-login" type="submit" onclick="cadastrarUsuario()">Cadastrar</button>
+        <button class="btn-login" type="submit" onclick="cadastrarServico()">Cadastrar</button>
 
         <div class="extra">
             <p>Ja tem usuario? <a href="/login">Voltar para login</a></p>
         </div>
     </form>
 </main>
-<script src="/js/agendamento.js"></script>
+<script src="/js/cadastro.js"></script>
 </body>
 </html>

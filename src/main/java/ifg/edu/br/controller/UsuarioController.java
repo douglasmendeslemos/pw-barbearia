@@ -41,16 +41,19 @@ public class UsuarioController {
     @POST
     @Path("/cadastro/api")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.TEXT_HTML)
-    public Response salvar(@BeanParam UsuarioDTO usuarioDTO) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response salvar(UsuarioDTO usuarioDTO) {
         System.out.println("Realizando o salvamento do novo cadastro");
         String erro = usuarioBO.cadastrarUsuario(usuarioDTO);
 
         if (erro != null) {
-            return Response.ok(Templates.Cadastro(erro, null)).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(erro)
+                    .build();
         }
         System.out.println("CADASTRO - Realizado com sucesso");
-        return Response.ok(Templates.Cadastro(null, "Usuario cadastrado com sucesso.")).build();
+        return Response.ok("Usuário cadastrado com sucesso.")
+                .build();
     }
 
 }
