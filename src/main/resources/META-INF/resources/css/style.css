@@ -59,9 +59,8 @@ a {
 /* ============================================================== */
 .login-page {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Fundo suave em vez do gradiente escuro */
+    flex-direction: column; /* Faz a barra ficar no topo e o card embaixo */
+    min-height: 100vh;      /* Garante que a página ocupe a altura toda */
     background: var(--bg);
 }
 
@@ -72,6 +71,9 @@ a {
     border-radius: 16px;
     box-shadow: var(--shadow);
     border: 1px solid var(--line);
+
+    /* A mágica do alinhamento acontece aqui: */
+    margin: auto; /* No flex-direction: column, isso empurra o card exatamente para o meio! */
 }
 
 .cadastro-container {
@@ -197,6 +199,15 @@ a {
 /* ============================================================== */
 .dashboard-page {
     display: flex;
+    flex-direction: column; /* Força o cabeçalho a ficar na linha de cima */
+    min-height: 100vh;
+}
+
+/* Nova classe que criamos para colocar o menu e o conteúdo lado a lado */
+.dashboard-wrapper {
+    display: flex;
+    flex: 1; /* Faz essa área preencher tudo de espaco que sobrar abaixo do topo */
+    width: 100%;
 }
 
 .sidebar {
@@ -384,5 +395,5 @@ tr:hover {
     }
 
     .sidebar {
-        width: 100%;
-        min-
+        width: 100%;}
+}

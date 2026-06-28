@@ -7,17 +7,25 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/agendamentoBarber")
+@Path("/agendamentoBarbeiro")
 public class AgendamentoBarberController {
 
     @CheckedTemplate
     public static class Templates {
-        public static native TemplateInstance AgendamentoBarber();
+        public static native TemplateInstance agendamentoBarber();
+        public static native TemplateInstance servicos();
     }
-
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance AgendamentoBarber() {
-        return Templates.AgendamentoBarber();
+    public TemplateInstance agendamentoBarber() {
+        return Templates.agendamentoBarber();
     }
+
+    @Path("/servicos")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance servicos() {
+        return Templates.servicos();
+    }
+
 }

@@ -5,18 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Agendamentos</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styleIndex.css">
 </head>
 <body class="dashboard-page">
+
+<header class="topbar">
+    <a class="brand" href="/" aria-label="Barbearia D+">
+        <span class="brand-mark">BP</span>
+        <span>
+        <strong>Barbearia D+</strong>
+        <small>agenda online</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+        <a href="/agendamentoBarbeiro/servicos">Serviços</a>
+        <a href="#barbeiros">Barbeiros</a>
+        <a href="/usuarios/cadastro">Agendar</a>
+        <a href="/login">Realizar Login</a>
+    </nav>
+</header>
+<div class="dashboard-wrapper">
 <aside class="sidebar">
-    <div class="logo">
-        <h1>Barbearia D+</h1>
-    </div>
 
     <nav class="menu" aria-label="Menu principal">
         <a href="/agendamentos">Dashboard</a>
         <a href="/agendamentos">Agendamentos</a>
         <a href="#">Clientes</a>
-        <a href="#">Servicos</a>
+        <a href="/agendamentoBarbeiro/servicos">Servicos</a>
         <a href="#">Barbeiros</a>
         <a href="#">Relatorios</a>
     </nav>
@@ -129,7 +145,7 @@
         </table>
     </section>
 </main>
-
+</div>
 <script src="/js/agendamento.js"></script>
 </body>
 </html>
