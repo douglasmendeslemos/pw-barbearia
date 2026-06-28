@@ -25,14 +25,20 @@ public class UsuarioBO {
 
     public AuthResultadoDTO realizarLogin(LoginRequestDTO loginRequestDTO) {
 
+        System.out.println("Email recebido: " + loginRequestDTO.email());
+
         UsuarioEntity usuario = usuarioDAO.buscarPorEmail(loginRequestDTO.email());
         if (usuario == null) {
+            System.out.println("Não encontrado ERRO AQUI ");
             throw new WebApplicationException("login inválido", 401);
         }
+        System.out.println("Usuário encontrado: " + usuario);
 
         boolean senha = BcryptUtil.matches(loginRequestDTO.senha(), usuario.getSenhaHash());
+        System.out.println("Senha válida: " + senha);
 
         if (!senha) {
+            System.out.println("ERRO de SENHA INVALIDA");
             throw new WebApplicationException("login inválido", 401);
         }
 
@@ -43,6 +49,7 @@ public class UsuarioBO {
                 .expiresIn(3600) // 1 hora em segundos
                 .sign(); //Assina digitalmente e gera a string final
 
+        System.out.println("Token gerado.");
         return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().getNomePerfil());
 
     }
@@ -57,7 +64,8 @@ public class UsuarioBO {
         UsuarioEntity usuario = new UsuarioEntity();
         usuario.setNome(usuarioDTO.getNome().trim());
         usuario.setEmail(usuarioDTO.getEmail().trim().toLowerCase());
-        usuario.setSenhaHash(gerarHash(usuarioDTO.getSenha()));
+        usuario.setSenhaHash(BcryptUtil.bcryptHash(usuarioDTO.getSenha()));//Alterando para Bcrypt
+
 
         // ==========================================
         // CORREÇÃO: Definindo o perfil padrão (ID 5)

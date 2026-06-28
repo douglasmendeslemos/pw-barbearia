@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
-@Path("/auth")
+@Path("/login")
 public class AuthController {
 
     @Inject
@@ -26,12 +26,11 @@ public class AuthController {
     public static class Templates {
         public static native TemplateInstance login();
     }
-    @Path("/login")
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance login() { return Templates.login();}
 
-    @Path("/login")
+    @Path("/auth")
     @POST
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)

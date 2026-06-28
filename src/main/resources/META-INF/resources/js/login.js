@@ -10,13 +10,14 @@ async function fazerLogin() {
     };
 
     try {
-        const resposta = await fetch('/auth/login', {
+        const resposta = await fetch('/login/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(loginRequestDTO)
         });
+        console.log(resposta.status)
         if (!resposta.ok) {
             alert("Credenciais inválidas");
             return;

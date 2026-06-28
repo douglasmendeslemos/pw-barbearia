@@ -43,12 +43,13 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
     public Response salvar(@BeanParam UsuarioDTO usuarioDTO) {
+        System.out.println("Realizando o salvamento do novo cadastro");
         String erro = usuarioBO.cadastrarUsuario(usuarioDTO);
 
         if (erro != null) {
             return Response.ok(Templates.Cadastro(erro, null)).build();
         }
-
+        System.out.println("CADASTRO - Realizado com sucesso");
         return Response.ok(Templates.Cadastro(null, "Usuario cadastrado com sucesso.")).build();
     }
 
