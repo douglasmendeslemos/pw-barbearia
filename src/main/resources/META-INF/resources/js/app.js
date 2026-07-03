@@ -99,10 +99,8 @@ function loadAppointments() {
     const saved = localStorage.getItem(storageKey);
     return saved ? JSON.parse(saved) : [];
 }
-
-function saveAppointments() {
-    localStorage.setItem(storageKey, JSON.stringify(appointments));
-}
+//save temporario
+function saveAppointments() {localStorage.setItem(storageKey, JSON.stringify(appointments));}
 
 function showToast(message) {
     toast.textContent = message;

@@ -14,9 +14,9 @@ public class AgendamentoRequestDTO {
     @Getter @Setter
     private String descricao;
     @Getter @Setter
-    private String barbeiroNome;
+    private String barbeiro;
     @Getter @Setter
-    private String dataAgendamento;
+    private String data;
     @Getter @Setter
-    private String horaAgendamento;
+    private String hora;
 }
