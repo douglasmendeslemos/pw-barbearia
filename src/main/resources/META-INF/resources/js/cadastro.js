@@ -30,7 +30,7 @@ function validarFormulario(dados) {
 
     return null;
 }
-
+//função de cadastrar usuario
 async function cadastrarUsuario(event) {
     event.preventDefault();
     limparMensagem();
@@ -95,6 +95,7 @@ async function cadastrarServico() {
         duracaoMinutos: tempoDigitado
     };
 
+    console.log(ServicoRequestDTO)
     //if (erro) { mostrarMensagem("erro", erro); return;}
 
     botaoSubmit.disabled = true;
