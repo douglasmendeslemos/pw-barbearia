@@ -18,5 +18,4 @@ public class PerfilEntity {
     @Getter @Setter
     private String nomePerfil;
 
-
 }

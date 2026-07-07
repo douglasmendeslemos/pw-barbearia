@@ -48,8 +48,9 @@ public class UsuarioBO {
                 .claim("id", usuario.getId()) // Recupera a Id do usuário com uma chamada rotulada
                 .expiresIn(3600) // 1 hora em segundos
                 .sign(); //Assina digitalmente e gera a string final
-
+        System.out.println(usuario.getPerfil().getNomePerfil());
         System.out.println("Token gerado.");
+        System.out.println(token);
         return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().getNomePerfil());
 
     }

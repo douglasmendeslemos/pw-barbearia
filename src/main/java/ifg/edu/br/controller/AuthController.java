@@ -8,6 +8,7 @@ import ifg.edu.br.model.dto.LoginResponseDTO;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -15,7 +16,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
-@Path("/login")
+@Path("/auth")
 public class AuthController {
 
     @Inject
@@ -30,12 +31,12 @@ public class AuthController {
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance login() { return Templates.login();}
 
-    @Path("/auth")
+    @Path("/login")
     @POST
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@Valid LoginRequestDTO loginRequestDTO) {
+    public Response login(LoginRequestDTO loginRequestDTO) {
 
         AuthResultadoDTO authResultado = usuarioBO.realizarLogin(loginRequestDTO);
 
@@ -48,6 +49,7 @@ public class AuthController {
                 .sameSite(NewCookie.SameSite.STRICT)
                 .maxAge(3600)
                 .build();
+
 
         //Dto limpo para o front sem o token
         LoginResponseDTO responseDTO = new LoginResponseDTO(
@@ -63,4 +65,20 @@ public class AuthController {
 
     }
 
+    @Path("/logout")
+    @POST
+    public Response logout() {
+        NewCookie cookie = new NewCookie.Builder("jwt")
+                .value("")
+                .path("/")
+                .httpOnly(true)
+                .secure(false)
+                .sameSite(NewCookie.SameSite.STRICT)
+                .maxAge(0)
+                .build();
+
+        return Response.ok()
+                .cookie(cookie)
+                .build();
+    }
 }

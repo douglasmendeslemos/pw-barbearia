@@ -20,7 +20,6 @@
 
     <nav class="nav" aria-label="Navegação principal">
         <a href="/agendamentoBarbeiro/servicos">Serviços</a>
-        <a href="#barbeiros">Barbeiros</a>
         <a href="/usuarios/cadastro">Agendar</a>
         <a href="/login">Realizar Login</a>
     </nav>
@@ -29,12 +28,7 @@
 <aside class="sidebar">
 
     <nav class="menu" aria-label="Menu principal">
-        <a href="/agendamentos">Dashboard</a>
-        <a href="/agendamentos">Agendamentos</a>
-        <a href="#">Clientes</a>
         <a href="/agendamentoBarbeiro/servicos">Servicos</a>
-        <a href="#">Barbeiros</a>
-        <a href="#">Relatorios</a>
     </nav>
 </aside>
 
@@ -112,37 +106,30 @@
     </section>
 
     <section class="tabela">
-        <h3>Proximos Horarios</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Servico</th>
-                <th>Horario</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Carlos Mendes</td>
-                <td>Corte classico</td>
-                <td>09:00</td>
-                <td><span class="status confirmado">Confirmado</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Silva</td>
-                <td>Barba</td>
-                <td>10:00</td>
-                <td><span class="status pendente">Pendente</span></td>
-            </tr>
-            <tr>
-                <td>Joao Paulo</td>
-                <td>Corte e barba</td>
-                <td>11:30</td>
-                <td><span class="status confirmado">Confirmado</span></td>
-            </tr>
-            </tbody>
-        </table>
+        <aside class="schedule-panel" id="painel" aria-labelledby="schedule-title">
+            <div class="schedule-header">
+                <div>
+                    <p class="eyebrow">Painel</p>
+                    <h2 id="schedule-title">Agenda do dia</h2>
+                </div>
+                <button class="icon-button" id="clearSchedule" type="button" title="Limpar agenda" aria-label="Limpar agenda">
+                    ×
+                </button>
+            </div>
+
+            <div class="stats">
+                <div>
+                    <strong id="totalAppointments">0</strong>
+                    <span>horários</span>
+                </div>
+                <div>
+                    <strong id="dayRevenue">R$ 0</strong>
+                    <span>previsto</span>
+                </div>
+            </div>
+
+            <div class="appointment-list" id="appointmentList"></div>
+        </aside>
     </section>
 </main>
 </div>

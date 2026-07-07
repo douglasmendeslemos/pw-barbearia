@@ -5,6 +5,7 @@ import ifg.edu.br.model.dto.ServicoRequestDTO;
 import ifg.edu.br.model.dto.UsuarioDTO;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

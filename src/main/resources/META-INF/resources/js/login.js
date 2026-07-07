@@ -10,7 +10,7 @@ async function fazerLogin() {
     };
 
     try {
-        const resposta = await fetch('/login/auth', {
+        const resposta = await fetch('/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ async function fazerLogin() {
         sessionStorage.setItem('nome', dados.nome);
         sessionStorage.setItem('perfil', dados.perfil);
 
-        window.location.href = "/"
+        window.location.href = "/agendamentoUser"
     } catch (erro) {
         console.error("Erro ao conectar com o servidor", erro);
         alert("O servidor está fora do ar.")

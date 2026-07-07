@@ -307,6 +307,28 @@ if (bookingDate) {
     bookingDate.value = todayISO();
 }
 
+async function logout() {
+    console.log("Cliquei em sair");
+
+    try {
+        const resposta = await fetch("/auth/logout", {
+            method: "POST"
+        });
+
+        if (resposta.ok) {
+            // Limpa dados armazenados no navegador
+            sessionStorage.clear();
+            localStorage.clear();
+
+            // Redireciona para a tela de login
+            window.location.href = "/auth";
+        } else {
+            alert("Não foi possível realizar logout.");
+        }
+    } catch (erro) {
+        console.error(erro);
+    }
+}
 renderAppointments();
 
 

@@ -65,6 +65,7 @@ async function cadastrarUsuario(event) {
 
         formCadastroUsuario.reset();
         mostrarMensagem("sucesso", mensagem || "Usuario cadastrado com sucesso.");
+        window.location.href = "/auth"
     } catch (error) {
         mostrarMensagem("erro", "Erro de comunicacao com o servidor.");
     } finally {

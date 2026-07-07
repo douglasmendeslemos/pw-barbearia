@@ -5,10 +5,13 @@ import ifg.edu.br.model.dto.AgendamentoRequestDTO;
 import ifg.edu.br.model.dto.ServicoRequestDTO;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @Path("/agendamentoUser")
 public class AgendamentoUser {
@@ -21,6 +24,7 @@ public class AgendamentoUser {
     }
 
     @CheckedTemplate
+    @Authenticated
     public static class Templates {
         public static native TemplateInstance AgendamentoUser();
     }
