@@ -33,4 +33,8 @@ public class PerfilBO {
         return Response.ok(perfilDAO.listAllNames()).build();
     }
 
+    public Response listarTodosPerfis(){
+        return Response.ok(perfilDAO.listAll()).build();
+    }
+
 }

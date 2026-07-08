@@ -6,12 +6,17 @@ import ifg.edu.br.model.entity.ServicosEntity;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.util.List;
 
 @RequestScoped
 public class ServicosBO {
 
     @Inject
     ServicosDAO servicosDAO;
+
+    public List<ServicosEntity> listarTodos() {
+        return servicosDAO.listarTodos();
+    }
 
     @Transactional
     public String cadastrarServicos(ServicoRequestDTO servicosDTO) {
@@ -23,10 +28,10 @@ public class ServicosBO {
         }
 
         ServicosEntity servico = new ServicosEntity();
-        servico.setNome(servicosDTO.getNome());
-        servico.setDescricao(servicosDTO.getDescricao());
-        servico.setDuracaoMinutos(servicosDTO.getDuracaoMinutos());
-        servico.setValor(servicosDTO.getValor());
+        servico.setNome(servicosDTO.nome());
+        servico.setDescricao(servicosDTO.descricao());
+        servico.setDuracaoMinutos(servicosDTO.duracaoMinutos());
+        servico.setValor(servicosDTO.valor());
 
         servicosDAO.salvar(servico);
 
@@ -34,7 +39,7 @@ public class ServicosBO {
     }
 
     private ServicoRequestDTO validar(ServicoRequestDTO servicosDTO) {
-        if (campoVazio(servicosDTO.getNome()) || campoVazio(servicosDTO.getDescricao()) ) {
+        if (campoVazio(servicosDTO.nome()) || campoVazio(servicosDTO.descricao()) ) {
             System.out.println("Preencha todos os campos obrigatorios.");
             return null;
         }

@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class ServicosDAO {
@@ -16,5 +17,9 @@ public class ServicosDAO {
     @Transactional
     public void salvar(ServicosEntity servico) {
         entityManager.persist(servico);
+    }
+
+    public List<ServicosEntity> listarTodos() {
+        return entityManager.createQuery("SELECT s FROM ServicosEntity s", ServicosEntity.class).getResultList();
     }
 }

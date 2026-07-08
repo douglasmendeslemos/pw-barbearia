@@ -16,10 +16,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 @Path("/usuarios")
 public class UsuarioController {
 
@@ -40,7 +36,7 @@ public class UsuarioController {
 
     @POST
     @Path("/cadastro/api")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response salvar(UsuarioDTO usuarioDTO) {
         System.out.println("Realizando o salvamento do novo cadastro");

@@ -49,7 +49,7 @@ async function cadastrarAgendamento(event) {
 
     const agendamentoRequestDTO = {
         servico: servico.name,
-        preco: servico.price,
+        valor: servico.price,
         descricao: descricao,
         barbeiro: barbeiro.name,
         data: date,

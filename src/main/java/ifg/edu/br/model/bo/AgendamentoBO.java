@@ -29,12 +29,12 @@ public class AgendamentoBO {
         }
 
         AgendamentoEntity agenda = new AgendamentoEntity();
-        agenda.setServico(agendamentoDTO.getServico());
-        agenda.setValor(agendamentoDTO.getValor());
-        agenda.setDescricao(agendamentoDTO.getDescricao());
-        agenda.setBarbeiroNome(agendamentoDTO.getBarbeiro());
-        agenda.setDataAgendamento(agendamentoDTO.getData());
-        agenda.setHoraAgendamento(agendamentoDTO.getHora());
+        agenda.setServico(agendamentoDTO.servico());
+        agenda.setValor(agendamentoDTO.valor());
+        agenda.setDescricao(agendamentoDTO.descricao());
+        agenda.setBarbeiroNome(agendamentoDTO.barbeiro());
+        agenda.setDataAgendamento(agendamentoDTO.data());
+        agenda.setHoraAgendamento(agendamentoDTO.hora());
 
         agendamentoDAO.salvar(agenda);
 
@@ -42,7 +42,7 @@ public class AgendamentoBO {
     }
 
     private AgendamentoRequestDTO validar(AgendamentoRequestDTO agendamentoDTO) {
-        if (campoVazio(agendamentoDTO.getServico()) || campoVazio(agendamentoDTO.getBarbeiro()) ) {
+        if (campoVazio(agendamentoDTO.servico()) || campoVazio(agendamentoDTO.barbeiro()) ) {
             System.out.println("Preencha todos os campos obrigatorios.");
             return null;
         }
@@ -54,11 +54,11 @@ public class AgendamentoBO {
     }
 
     private void imprimirAgendamento(AgendamentoRequestDTO agendamento) {
-        System.out.println("Agendamento: " + agendamento.getServico());
-        System.out.println("Valor: " + agendamento.getValor());
-        System.out.println("Descricao: " + agendamento.getDescricao());
-        System.out.println("Babeiro: " + agendamento.getBarbeiro());
-        System.out.println("Data de Agendamento: " + agendamento.getData());
-        System.out.println("Hora Agendamento: " + agendamento.getHora());
+        System.out.println("Agendamento: " + agendamento.servico());
+        System.out.println("Valor: " + agendamento.valor());
+        System.out.println("Descricao: " + agendamento.descricao());
+        System.out.println("Babeiro: " + agendamento.barbeiro());
+        System.out.println("Data de Agendamento: " + agendamento.data());
+        System.out.println("Hora Agendamento: " + agendamento.hora());
     }
 }

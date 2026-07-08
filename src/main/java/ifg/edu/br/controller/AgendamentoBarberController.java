@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/agendamentoBarbeiro")
+@RolesAllowed("ADMINISTRADOR")
 public class AgendamentoBarberController {
 
     @Inject
@@ -45,10 +46,9 @@ public class AgendamentoBarberController {
 
         System.out.println("verificou e criou o string erro");
         if (erro != null) {
-            return Response.ok(Templates
-                    .servicos(erro, "Ocorreu um erro no servidor"))
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(erro)
                     .build();
-
         }
         System.out.println("CADASTRO DE SERVIÇO - Realizado com sucesso");
 

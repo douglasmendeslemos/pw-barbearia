@@ -1,8 +1,10 @@
 package ifg.edu.br.controller;
 
 import ifg.edu.br.model.bo.AgendamentoBO;
+import ifg.edu.br.model.bo.ServicosBO;
 import ifg.edu.br.model.dto.AgendamentoRequestDTO;
 import ifg.edu.br.model.dto.ServicoRequestDTO;
+import ifg.edu.br.model.entity.ServicosEntity;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
@@ -11,9 +13,11 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @Path("/agendamentoUser")
+@RolesAllowed({"Cliente", "ADMINISTRADOR"})
 public class AgendamentoUser {
 
     private final AgendamentoBO agendamentoBO;

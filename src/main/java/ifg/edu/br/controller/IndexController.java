@@ -1,14 +1,23 @@
 package ifg.edu.br.controller;
 
+import ifg.edu.br.model.bo.ServicosBO;
+import ifg.edu.br.model.entity.ServicosEntity;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
+import jakarta.annotation.security.PermitAll;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/")
 public class IndexController {
+
+    @Inject
+    ServicosBO servicosBO;
 
     @CheckedTemplate
     public static class Templates {
@@ -19,5 +28,14 @@ public class IndexController {
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance index() {
         return Templates.index();
+    }
+
+    @GET
+    @Path("/api/servicos")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarServicosPublicos() {
+        List<ServicosEntity> servicos = servicosBO.listarTodos();
+        return Response.ok(servicos).build();
     }
 }

@@ -30,12 +30,25 @@ public class UsuarioDAO {
     }
 
     public UsuarioEntity buscarPorEmail(String email) {
-        //language=jpql
+        //language=hql
         String hql = "SELECT u FROM UsuarioEntity u WHERE u.email = :email";
         return (UsuarioEntity) entityManager
                 .createQuery(hql)
                 .setParameter("email", email)
                 .getResultStream().findFirst() //Retorna primeira opção encontrada ou null
                 .orElse(null);
+    }
+
+    public java.util.List<UsuarioEntity> listarTodos() {
+        return entityManager.createQuery("SELECT u FROM UsuarioEntity u", UsuarioEntity.class).getResultList();
+    }
+
+    public UsuarioEntity buscarPorId(Long id) {
+        return entityManager.find(UsuarioEntity.class, id);
+    }
+
+    @Transactional
+    public void atualizar(UsuarioEntity usuario) {
+        entityManager.merge(usuario);
     }
 }

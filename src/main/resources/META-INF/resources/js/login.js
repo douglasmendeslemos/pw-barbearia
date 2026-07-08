@@ -26,7 +26,12 @@ async function fazerLogin() {
         sessionStorage.setItem('nome', dados.nome);
         sessionStorage.setItem('perfil', dados.perfil);
 
-        window.location.href = "/agendamentoUser"
+        const perfil = dados.perfil ? dados.perfil.toLowerCase().trim() : "";
+        if (perfil === "barbeiro" || perfil === "administrador") {
+            window.location.href = "/agendamentoBarbeiro";
+        } else {
+            window.location.href = "/agendamentoUser";
+        }
     } catch (erro) {
         console.error("Erro ao conectar com o servidor", erro);
         alert("O servidor está fora do ar.")

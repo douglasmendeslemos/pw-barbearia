@@ -31,6 +31,11 @@ public class PerfilDAO {
                 .getResultList();
     }
 
+    public List<PerfilEntity> listAll(){
+        String hql = "SELECT p FROM PerfilEntity p";
+        return entityManager
+                .createQuery(hql, PerfilEntity.class)
+                .getResultList();
+    }
 
 }
-

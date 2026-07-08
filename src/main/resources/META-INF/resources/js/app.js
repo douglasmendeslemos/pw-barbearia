@@ -1,33 +1,4 @@
-const services = [
-    {
-        id: "corte",
-        name: "Corte masculino",
-        description: "Tesoura, máquina, acabamento e finalização.",
-        duration: 40,
-        price: 45
-    },
-    {
-        id: "barba",
-        name: "Barba completa",
-        description: "Toalha quente, navalha, hidratação e balm.",
-        duration: 30,
-        price: 35
-    },
-    {
-        id: "combo",
-        name: "Corte + barba",
-        description: "Atendimento completo para renovar o visual.",
-        duration: 70,
-        price: 75
-    },
-    {
-        id: "sobrancelha",
-        name: "Sobrancelha",
-        description: "Limpeza e alinhamento com acabamento natural.",
-        duration: 15,
-        price: 20
-    }
-];
+let services = [];
 
 const barbers = [
     {
@@ -172,7 +143,7 @@ function renderTimes() {
 }
 
 function getService(id) {
-    return services.find(service => service.id === id);
+    return services.find(service => service.id == id);
 }
 
 function getBarber(id) {
@@ -296,8 +267,29 @@ function handleClear() {
     showToast("Agenda da data limpa.");
 }
 
+async function carregarServicosDoBanco() {
+    try {
+        const resposta = await fetch("/api/servicos");
+        if (resposta.ok) {
+            const dadosDoBanco = await resposta.json();
+            services = dadosDoBanco.map(servico => ({
+                id: servico.id,
+                name: servico.nome,
+                description: servico.descricao,
+                duration: servico.duracaoMinutos,
+                price: servico.valor
+            }));
+            renderServices();
+        } else {
+            console.error("Falha ao buscar os servicos do servidor.");
+        }
+    } catch (error) {
+        console.error("Erro de rede ao buscar os servicos:", error);
+    }
+}
+
 // Initial render calls
-renderServices();
+carregarServicosDoBanco();
 renderBarbers();
 renderTimes();
 

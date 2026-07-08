@@ -1,7 +1,9 @@
 package ifg.edu.br.model.dto;
 
 public record UsuarioListDTO (
-        Integer id,
-         String nome,
-        String perfil
+    Long id,
+    String nome,
+    String email,
+    Long perfilId,
+    String perfilNome
 ){}

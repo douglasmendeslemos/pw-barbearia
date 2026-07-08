@@ -51,9 +51,9 @@ async function cadastrarUsuario(event) {
         const resposta = await fetch("/usuarios/cadastro/api", {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-            body: new URLSearchParams(dados)
+            body: JSON.stringify(Object.fromEntries(dados))
         });
 
         const mensagem = await resposta.text();

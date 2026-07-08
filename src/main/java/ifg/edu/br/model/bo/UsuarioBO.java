@@ -7,14 +7,13 @@ import ifg.edu.br.model.dto.UsuarioDTO;
 import ifg.edu.br.model.entity.PerfilEntity;
 import ifg.edu.br.model.entity.UsuarioEntity;
 import io.smallrye.jwt.build.Jwt;
+import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
 import io.quarkus.elytron.security.common.BcryptUtil;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.jetbrains.annotations.NotNull;
 
 @RequestScoped
 public class UsuarioBO {
@@ -63,9 +62,9 @@ public class UsuarioBO {
         }
 
         UsuarioEntity usuario = new UsuarioEntity();
-        usuario.setNome(usuarioDTO.getNome().trim());
-        usuario.setEmail(usuarioDTO.getEmail().trim().toLowerCase());
-        usuario.setSenhaHash(BcryptUtil.bcryptHash(usuarioDTO.getSenha()));//Alterando para Bcrypt
+        usuario.setNome(usuarioDTO.nome().trim());
+        usuario.setEmail(usuarioDTO.email().trim().toLowerCase());
+        usuario.setSenhaHash(BcryptUtil.bcryptHash(usuarioDTO.senha()));//Alterando para Bcrypt
 
 
         // ==========================================
@@ -82,16 +81,17 @@ public class UsuarioBO {
         return null;
     }
 
-    private String validar(UsuarioDTO usuarioDTO) {
-        if (campoVazio(usuarioDTO.getNome()) || campoVazio(usuarioDTO.getEmail()) || campoVazio(usuarioDTO.getSenha())) {
+    @Nullable
+    private String validar(@NotNull UsuarioDTO usuarioDTO) {
+        if (campoVazio(usuarioDTO.nome()) || campoVazio(usuarioDTO.email()) || campoVazio(usuarioDTO.senha())) {
             return "Preencha todos os campos obrigatorios.";
         }
 
-        if (!usuarioDTO.senhasConferem()) {
+        if (!usuarioDTO.senha().equals(usuarioDTO.confirmacaoSenha())) {
             return "A senha e a confirmacao devem ser iguais.";
         }
 
-        if (usuarioDAO.existeEmail(usuarioDTO.getEmail().trim())) {
+        if (usuarioDAO.existeEmail(usuarioDTO.email().trim().toLowerCase())) {
             return "Ja existe um usuario cadastrado com este email.";
         }
 
@@ -102,20 +102,22 @@ public class UsuarioBO {
         return valor == null || valor.trim().isEmpty();
     }
 
-    private String gerarHash(String senha) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(senha.getBytes(StandardCharsets.UTF_8));
-            StringBuilder resultado = new StringBuilder();
 
-            for (byte item : hash) {
-                resultado.append(String.format("%02x", item));
-            }
 
-            return resultado.toString();
-        } catch (NoSuchAlgorithmException exception) {
-            throw new IllegalStateException("Nao foi possivel gerar o hash da senha.", exception);
+    public java.util.List<UsuarioEntity> listarTodos() {
+        return usuarioDAO.listarTodos();
+    }
+
+    @Transactional
+    public void alterarPerfil(Long usuarioId, Long perfilId) {
+        UsuarioEntity usuario = usuarioDAO.buscarPorId(usuarioId);
+        if (usuario == null) {
+            throw new jakarta.ws.rs.WebApplicationException("Usuario nao encontrado", 404);
         }
+        PerfilEntity perfil = new PerfilEntity();
+        perfil.setId(perfilId);
+        usuario.setPerfil(perfil);
+        usuarioDAO.atualizar(usuario);
     }
 
 }

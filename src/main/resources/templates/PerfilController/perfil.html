@@ -2,18 +2,140 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Perfis | Barbearia D+</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styleIndex.css">
+    <style>
+        .perfil-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .perfil-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+        .perfil-card h2 {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--brand);
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .perfil-card p.subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+        .users-table th, .users-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+        .users-table th {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .users-table tr:hover td {
+            background: rgba(239, 229, 216, 0.3);
+        }
+        .users-table td select {
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fffdf8;
+            color: var(--ink);
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .users-table td select:focus {
+            border-color: var(--accent);
+            outline: 2px solid rgba(23, 107, 100, 0.15);
+        }
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            font-weight: bold;
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+        .toast-notification.show {
+            transform: translateY(0);
+        }
+        .toast-notification.error {
+            background: var(--brand);
+        }
+    </style>
     <script src="js/perfil.js" defer></script>
 </head>
-<body>
+<body class="dashboard-page">
 
-<h1>Cadastrar Perfil</h1>
+<header class="topbar">
+    <a class="brand" href="/" aria-label="Barbearia D+">
+        <span class="brand-mark">BP</span>
+        <span>
+            <strong>Barbearia D+</strong>
+            <small>agenda online</small>
+        </span>
+    </a>
 
-<form>
-    <label for="nome">Nome do Perfil:</label><br>
-    <input type="text" id="nome" name="nome" required><br><br>
-    <button type="button" onclick="salvar()">Salvar</button>
-</form>
+    <nav class="nav" aria-label="Navegação principal">
+        <a href="/agendamentoBarbeiro">Agendamentos</a>
+        <a href="/agendamentoBarbeiro/servicos">Serviços</a>
+        <a href="/perfil" class="active" style="color: var(--brand); border-bottom: 2px solid var(--brand)">Perfis</a>
+        <a href="#" onclick="logout()" style="color: var(--brand);">Sair</a>
+    </nav>
+</header>
+
+<main class="perfil-container">
+    <div class="perfil-card">
+        <h2>Controle de Privilégios</h2>
+        <p class="subtitle">Gerencie os papéis e permissões de acesso de todos os usuários cadastrados no sistema.</p>
+        
+        <div style="overflow-x: auto;">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil / Privilégio</th>
+                    </tr>
+                </thead>
+                <tbody id="usuariosList">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">
+                            Carregando usuários...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<div id="toast" class="toast-notification">Operação realizada com sucesso!</div>
 
 </body>
 </html>
