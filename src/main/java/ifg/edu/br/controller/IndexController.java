@@ -1,6 +1,8 @@
 package ifg.edu.br.controller;
 
+import ifg.edu.br.model.bo.BarbeiroBO;
 import ifg.edu.br.model.bo.ServicosBO;
+import ifg.edu.br.model.entity.BarbeiroEntity;
 import ifg.edu.br.model.entity.ServicosEntity;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
@@ -18,6 +20,9 @@ public class IndexController {
 
     @Inject
     ServicosBO servicosBO;
+
+    @Inject
+    BarbeiroBO barbeiroBO;
 
     @CheckedTemplate
     public static class Templates {
@@ -37,5 +42,14 @@ public class IndexController {
     public Response listarServicosPublicos() {
         List<ServicosEntity> servicos = servicosBO.listarTodos();
         return Response.ok(servicos).build();
+    }
+
+    @GET
+    @Path("/api/barbeiros")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarBarbeirosPublicos() {
+        List<BarbeiroEntity> barbeiros = barbeiroBO.listarTodos();
+        return Response.ok(barbeiros).build();
     }
 }

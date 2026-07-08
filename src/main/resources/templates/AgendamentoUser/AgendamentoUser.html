@@ -69,6 +69,16 @@
         <button class="button primary submit" onclick="cadastrarAgendamento()">Confirmar agendamento</button>
     </form>
 
+    <aside class="schedule-panel" id="painel" aria-labelledby="schedule-title" style="padding: clamp(18px, 3vw, 28px);">
+        <div class="schedule-header" style="margin-bottom: 20px;">
+            <p class="eyebrow">Histórico</p>
+            <h2 id="schedule-title" style="font-family: Georgia, serif; color: var(--brand); margin: 4px 0 0 0; font-size: 24px;">Meus Agendamentos</h2>
+        </div>
+        
+        <div class="appointment-list" id="meusAgendamentosList">
+            <div style="text-align: center; color: var(--muted); padding: 20px;">Carregando agendamentos...</div>
+        </div>
+    </aside>
 </section>
 <script src="js/app.js"></script>
 <script src="js/agendamento.js"></script>

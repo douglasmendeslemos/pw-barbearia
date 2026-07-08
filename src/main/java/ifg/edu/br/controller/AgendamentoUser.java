@@ -23,8 +23,20 @@ public class AgendamentoUser {
     private final AgendamentoBO agendamentoBO;
 
     @Inject
+    JsonWebToken jwt;
+
+    @Inject
     public AgendamentoUser(AgendamentoBO agendamentoBO) {
         this.agendamentoBO = agendamentoBO;
+    }
+
+    @GET
+    @Path("/meus-agendamentos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response meusAgendamentos() {
+        String emailCliente = jwt.getName();
+        List<ifg.edu.br.model.entity.AgendamentoEntity> agendamentos = agendamentoBO.listarAgendamentosDoCliente(emailCliente);
+        return Response.ok(agendamentos).build();
     }
 
     @CheckedTemplate
@@ -45,7 +57,8 @@ public class AgendamentoUser {
     @Produces(MediaType.APPLICATION_JSON)
     public Response salvar(AgendamentoRequestDTO agendamentoDTO) {
         System.out.println("NOVO AGENDAMENTO... CADASTRANDO...");
-        String erro = agendamentoBO.realizarAgendamento(agendamentoDTO);
+        String emailCliente = jwt.getName();
+        String erro = agendamentoBO.realizarAgendamento(agendamentoDTO, emailCliente);
 
         System.out.println("verificou e criou o string erro caso seja necessario");
         if (erro != null) {

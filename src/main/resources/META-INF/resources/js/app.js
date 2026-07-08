@@ -1,25 +1,6 @@
 let services = [];
 
-const barbers = [
-    {
-        id: "marcos",
-        name: "Marcos",
-        initials: "MA",
-        specialty: "Especialista em degradê e cortes clássicos."
-    },
-    {
-        id: "renan",
-        name: "Renan",
-        initials: "RE",
-        specialty: "Barba, navalha e atendimento premium."
-    },
-    {
-        id: "lucas",
-        name: "Lucas",
-        initials: "LU",
-        specialty: "Cortes modernos, freestyle e finalização."
-    }
-];
+let barbers = [];
 
 const timeSlots = [
     "09:00",
@@ -147,7 +128,7 @@ function getService(id) {
 }
 
 function getBarber(id) {
-    return barbers.find(barber => barber.id === id);
+    return barbers.find(barber => barber.id == id);
 }
 
 function filteredAppointments() {
@@ -288,9 +269,29 @@ async function carregarServicosDoBanco() {
     }
 }
 
+async function carregarBarbeirosDoBanco() {
+    try {
+        const resposta = await fetch("/api/barbeiros");
+        if (resposta.ok) {
+            const dadosDoBanco = await resposta.json();
+            barbers = dadosDoBanco.map(barbeiro => ({
+                id: barbeiro.id,
+                name: barbeiro.nome,
+                initials: barbeiro.iniciais,
+                specialty: barbeiro.especialidade
+            }));
+            renderBarbers();
+        } else {
+            console.error("Falha ao buscar os barbeiros do servidor.");
+        }
+    } catch (error) {
+        console.error("Erro de rede ao buscar os barbeiros:", error);
+    }
+}
+
 // Initial render calls
 carregarServicosDoBanco();
-renderBarbers();
+carregarBarbeirosDoBanco();
 renderTimes();
 
 // Initialize date input if it exists

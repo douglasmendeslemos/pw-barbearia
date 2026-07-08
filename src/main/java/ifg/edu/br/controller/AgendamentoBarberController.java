@@ -1,8 +1,12 @@
 package ifg.edu.br.controller;
 
+import ifg.edu.br.model.bo.AgendamentoBO;
 import ifg.edu.br.model.bo.ServicosBO;
+import ifg.edu.br.model.dao.UsuarioDAO;
 import ifg.edu.br.model.dto.ServicoRequestDTO;
 import ifg.edu.br.model.dto.UsuarioDTO;
+import ifg.edu.br.model.entity.AgendamentoEntity;
+import ifg.edu.br.model.entity.UsuarioEntity;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.annotation.security.RolesAllowed;
@@ -10,13 +14,38 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @Path("/agendamentoBarbeiro")
-@RolesAllowed("ADMINISTRADOR")
+@RolesAllowed({"ADMINISTRADOR", "Barbeiro", "BARBEIRO"})
 public class AgendamentoBarberController {
 
     @Inject
     ServicosBO servicosBO;
+
+    @Inject
+    AgendamentoBO agendamentoBO;
+
+    @Inject
+    UsuarioDAO usuarioDAO;
+
+    @Inject
+    JsonWebToken jwt;
+
+    @GET
+    @Path("/meus-agendamentos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response meusAgendamentos() {
+        String email = jwt.getName();
+        UsuarioEntity usuario = usuarioDAO.buscarPorEmail(email);
+        if (usuario == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado.").build();
+        }
+        
+        List<AgendamentoEntity> agendamentos = agendamentoBO.listarAgendamentosDoBarbeiro(usuario.getNome());
+        return Response.ok(agendamentos).build();
+    }
 
     @CheckedTemplate
     public static class Templates {

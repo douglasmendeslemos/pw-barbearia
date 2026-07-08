@@ -5,7 +5,6 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
 
 @RequestScoped
@@ -38,4 +37,13 @@ public class PerfilDAO {
                 .getResultList();
     }
 
+    public PerfilEntity buscarPorNome(String nomePerfil) {
+        String hql = "SELECT p FROM PerfilEntity p WHERE LOWER(p.nomePerfil) = LOWER(:nome)";
+        return entityManager
+                .createQuery(hql, PerfilEntity.class)
+                .setParameter("nome", nomePerfil)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
 }

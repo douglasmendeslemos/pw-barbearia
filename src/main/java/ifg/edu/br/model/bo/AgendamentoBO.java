@@ -1,10 +1,12 @@
 package ifg.edu.br.model.bo;
 
 import ifg.edu.br.model.dao.AgendamentoDAO;
+import ifg.edu.br.model.dao.UsuarioDAO;
 import ifg.edu.br.model.dto.AgendamentoRequestDTO;
 import ifg.edu.br.model.dto.ServicoRequestDTO;
 import ifg.edu.br.model.entity.AgendamentoEntity;
 import ifg.edu.br.model.entity.ServicosEntity;
+import ifg.edu.br.model.entity.UsuarioEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -16,8 +18,11 @@ public class AgendamentoBO {
     @Inject
     AgendamentoDAO agendamentoDAO;
 
+    @Inject
+    UsuarioDAO usuarioDAO;
+
     @Transactional
-    public String realizarAgendamento(AgendamentoRequestDTO agendamentoDTO) {
+    public String realizarAgendamento(AgendamentoRequestDTO agendamentoDTO, String clienteEmail) {
         System.out.println("Entrei no BO de AGENDAMENTO");
         AgendamentoRequestDTO erro = validar(agendamentoDTO);
 
@@ -28,6 +33,11 @@ public class AgendamentoBO {
             return "Erro ao cadastrar: Validação incorreta!";
         }
 
+        UsuarioEntity cliente = usuarioDAO.buscarPorEmail(clienteEmail);
+        if (cliente == null) {
+            return "Erro ao cadastrar: Cliente nao localizado.";
+        }
+
         AgendamentoEntity agenda = new AgendamentoEntity();
         agenda.setServico(agendamentoDTO.servico());
         agenda.setValor(agendamentoDTO.valor());
@@ -35,6 +45,7 @@ public class AgendamentoBO {
         agenda.setBarbeiroNome(agendamentoDTO.barbeiro());
         agenda.setDataAgendamento(agendamentoDTO.data());
         agenda.setHoraAgendamento(agendamentoDTO.hora());
+        agenda.setCliente(cliente);
 
         agendamentoDAO.salvar(agenda);
 
@@ -60,5 +71,13 @@ public class AgendamentoBO {
         System.out.println("Babeiro: " + agendamento.barbeiro());
         System.out.println("Data de Agendamento: " + agendamento.data());
         System.out.println("Hora Agendamento: " + agendamento.hora());
+    }
+
+    public java.util.List<AgendamentoEntity> listarAgendamentosDoBarbeiro(String barbeiroNome) {
+        return agendamentoDAO.buscarPorBarbeiro(barbeiroNome);
+    }
+
+    public java.util.List<AgendamentoEntity> listarAgendamentosDoCliente(String clienteEmail) {
+        return agendamentoDAO.buscarPorClienteEmail(clienteEmail);
     }
 }

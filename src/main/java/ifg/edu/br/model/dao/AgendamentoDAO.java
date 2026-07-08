@@ -17,4 +17,20 @@ public class AgendamentoDAO {
     public void salvar(AgendamentoEntity agendamentoEntity) {
         entityManager.persist(agendamentoEntity);
     }
+
+    public java.util.List<AgendamentoEntity> buscarPorBarbeiro(String barbeiroNome) {
+        return entityManager.createQuery(
+                "SELECT a FROM AgendamentoEntity a WHERE a.barbeiroNome = :barbeiroNome", 
+                AgendamentoEntity.class)
+                .setParameter("barbeiroNome", barbeiroNome)
+                .getResultList();
+    }
+
+    public java.util.List<AgendamentoEntity> buscarPorClienteEmail(String email) {
+        return entityManager.createQuery(
+                "SELECT a FROM AgendamentoEntity a WHERE a.cliente.email = :email", 
+                AgendamentoEntity.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
 }

@@ -21,4 +21,7 @@ public class AgendamentoEntity {
     private String dataAgendamento;
     private String horaAgendamento;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private UsuarioEntity cliente;
 }
