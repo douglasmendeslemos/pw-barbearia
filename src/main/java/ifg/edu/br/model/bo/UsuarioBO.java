@@ -13,6 +13,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
 import io.quarkus.elytron.security.common.BcryptUtil;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jetbrains.annotations.NotNull;
 
 @RequestScoped
@@ -22,14 +24,58 @@ public class UsuarioBO {
     UsuarioDAO usuarioDAO;
 
 
-    public AuthResultadoDTO realizarLogin(LoginRequestDTO loginRequestDTO) {
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[cC][oO][mM]$";
+    private static final String SENHA_REGEX = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$";
 
+    private boolean validarEmail(String email) {
+        if (email == null) return false;
+        return email.trim().toLowerCase().matches(EMAIL_REGEX);
+    }
+
+    private boolean validarSenha(String senha) {
+        if (senha == null) return false;
+        return senha.matches(SENHA_REGEX);
+    }
+
+    public AuthResultadoDTO realizarLogin(LoginRequestDTO loginRequestDTO) {
         System.out.println("Email recebido: " + loginRequestDTO.email());
+
+        if (campoVazio(loginRequestDTO.email()) || campoVazio(loginRequestDTO.senha())) {
+            throw new WebApplicationException(
+                Response.status(jakarta.ws.rs.core.Response.Status.BAD_REQUEST)
+                    .entity("Preencha todos os campos.")
+                    .type(jakarta.ws.rs.core.MediaType.TEXT_PLAIN)
+                    .build()
+            );
+        }
+
+        if (!validarEmail(loginRequestDTO.email())) {
+            throw new WebApplicationException(
+                jakarta.ws.rs.core.Response.status(jakarta.ws.rs.core.Response.Status.BAD_REQUEST)
+                    .entity("Formato de e-mail inválido. Deve conter '@' e terminar com '.com'.")
+                    .type(jakarta.ws.rs.core.MediaType.TEXT_PLAIN)
+                    .build()
+            );
+        }
+
+        if (!validarSenha(loginRequestDTO.senha())) {
+            throw new WebApplicationException(
+                jakarta.ws.rs.core.Response.status(jakarta.ws.rs.core.Response.Status.BAD_REQUEST)
+                    .entity("A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.")
+                    .type(jakarta.ws.rs.core.MediaType.TEXT_PLAIN)
+                    .build()
+            );
+        }
 
         UsuarioEntity usuario = usuarioDAO.buscarPorEmail(loginRequestDTO.email());
         if (usuario == null) {
             System.out.println("Não encontrado ERRO AQUI ");
-            throw new WebApplicationException("login inválido", 401);
+            throw new WebApplicationException(
+                Response.status(jakarta.ws.rs.core.Response.Status.UNAUTHORIZED)
+                    .entity("login inválido")
+                    .type(MediaType.TEXT_PLAIN)
+                    .build()
+            );
         }
         System.out.println("Usuário encontrado: " + usuario);
 
@@ -38,7 +84,12 @@ public class UsuarioBO {
 
         if (!senha) {
             System.out.println("ERRO de SENHA INVALIDA");
-            throw new WebApplicationException("login inválido", 401);
+            throw new WebApplicationException(
+                Response.status(jakarta.ws.rs.core.Response.Status.UNAUTHORIZED)
+                    .entity("login inválido")
+                    .type(MediaType.TEXT_PLAIN)
+                    .build()
+            );
         }
 
         String token = Jwt.issuer("https://barbearia.ifg.br")
@@ -51,7 +102,6 @@ public class UsuarioBO {
         System.out.println("Token gerado.");
         System.out.println(token);
         return new AuthResultadoDTO(token, usuario.getNome(), usuario.getPerfil().getNomePerfil());
-
     }
 
     public String cadastrarUsuario(UsuarioDTO usuarioDTO) {
@@ -65,7 +115,6 @@ public class UsuarioBO {
         usuario.setNome(usuarioDTO.nome().trim());
         usuario.setEmail(usuarioDTO.email().trim().toLowerCase());
         usuario.setSenhaHash(BcryptUtil.bcryptHash(usuarioDTO.senha()));//Alterando para Bcrypt
-
 
         // ==========================================
         // CORREÇÃO: Definindo o perfil padrão (ID 5)
@@ -85,6 +134,14 @@ public class UsuarioBO {
     private String validar(@NotNull UsuarioDTO usuarioDTO) {
         if (campoVazio(usuarioDTO.nome()) || campoVazio(usuarioDTO.email()) || campoVazio(usuarioDTO.senha())) {
             return "Preencha todos os campos obrigatorios.";
+        }
+
+        if (!validarEmail(usuarioDTO.email())) {
+            return "Formato de e-mail inválido. Deve conter '@' e terminar com '.com'.";
+        }
+
+        if (!validarSenha(usuarioDTO.senha())) {
+            return "A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.";
         }
 
         if (!usuarioDTO.senha().equals(usuarioDTO.confirmacaoSenha())) {

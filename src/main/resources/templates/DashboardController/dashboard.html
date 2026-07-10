@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Estatísticas - Barbearia D+</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styleIndex.css">
+    <!-- Chart.js para renderização de gráficos modernos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .kpi-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .kpi-info p {
+            margin: 8px 0 0 0;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--brand);
+            font-family: Georgia, serif;
+        }
+        .kpi-icon {
+            font-size: 32px;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+        .charts-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 992px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+        .chart-card h3 {
+            margin: 0 0 20px 0;
+            font-family: Georgia, serif;
+            color: var(--brand);
+            font-size: 18px;
+            border-bottom: 2px solid #f8eedb;
+            padding-bottom: 8px;
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+
+<header class="topbar">
+    <a class="brand" href="/" aria-label="Barbearia D+">
+        <span class="brand-mark">BP</span>
+        <span>
+            <strong>Barbearia D+</strong>
+            <small>agenda online</small>
+        </span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+        <!-- Preenchido dinamicamente pelo menu.js -->
+        <a href="/agendamentoBarbeiro">Agendamentos</a>
+        <a href="/agendamentoBarbeiro/servicos">Serviços</a>
+        <a href="/perfil">Perfis</a>
+        <a href="/barbeiros">Barbeiros</a>
+        <a href="#" onclick="logoutUsuario()">Sair</a>
+    </nav>
+</header>
+
+<div class="dashboard-wrapper" style="max-width: 1300px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column;">
+    <div class="section-heading" style="margin-bottom: 30px;">
+        <p class="eyebrow">Relatórios Financeiros e de Agendamentos</p>
+        <h1 style="font-family: Georgia, serif; color: var(--brand); font-size: 32px; margin: 4px 0 0 0;">Painel de Estatísticas</h1>
+    </div>
+
+    <!-- KPIs Resumos -->
+    <div class="dashboard-grid">
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <h3>Clientes Ativos</h3>
+                <p id="kpiClientes">-</p>
+            </div>
+            <div class="kpi-icon">👥</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <h3>Barbeiros</h3>
+                <p id="kpiBarbeiros">-</p>
+            </div>
+            <div class="kpi-icon">💈</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <h3>Total Agendamentos</h3>
+                <p id="kpiAgendamentos">-</p>
+            </div>
+            <div class="kpi-icon">📅</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-info">
+                <h3>Faturamento</h3>
+                <p id="kpiFaturamento">R$ 0,00</p>
+            </div>
+            <div class="kpi-icon">💰</div>
+        </div>
+    </div>
+
+    <!-- Gráficos Principais -->
+    <div class="charts-container">
+        <!-- Faturamento por Dia -->
+        <div class="chart-card">
+            <h3>Faturamento Diário (Histórico)</h3>
+            <div class="chart-wrapper">
+                <canvas id="chartFaturamentoDia"></canvas>
+            </div>
+        </div>
+        
+        <!-- Faturamento por Barbeiro -->
+        <div class="chart-card">
+            <h3>Participação por Barbeiro</h3>
+            <div class="chart-wrapper">
+                <canvas id="chartFaturamentoBarber"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-container" style="grid-template-columns: 1fr 1fr;">
+        <!-- Agendamentos por Serviço -->
+        <div class="chart-card">
+            <h3>Agendamentos por Serviço</h3>
+            <div class="chart-wrapper">
+                <canvas id="chartServicos"></canvas>
+            </div>
+        </div>
+        
+        <!-- Produtividade por Barbeiro -->
+        <div class="chart-card">
+            <h3>Quantidade de Agendamentos por Barbeiro</h3>
+            <div class="chart-wrapper">
+                <canvas id="chartAgendamentosBarber"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/menu.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

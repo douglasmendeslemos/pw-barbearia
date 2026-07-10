@@ -19,7 +19,8 @@ async function fazerLogin() {
         });
         console.log(resposta.status)
         if (!resposta.ok) {
-            alert("Credenciais inválidas");
+            const mensagem = await resposta.text();
+            alert(mensagem || "Credenciais inválidas");
             return;
         }
         const dados = await resposta.json();

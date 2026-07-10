@@ -13,6 +13,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import ifg.edu.br.model.dto.BarbeiroResponseDTO;
+import ifg.edu.br.model.dto.ServicoResponseDTO;
 import java.util.List;
 
 @Path("/")
@@ -40,7 +42,15 @@ public class IndexController {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarServicosPublicos() {
-        List<ServicosEntity> servicos = servicosBO.listarTodos();
+        List<ServicoResponseDTO> servicos = servicosBO.listarTodos().stream()
+                .map(e -> new ServicoResponseDTO(
+                    e.getId(),
+                    e.getNome(),
+                    e.getDescricao(),
+                    e.getValor(),
+                    e.getDuracaoMinutos()
+                ))
+                .toList();
         return Response.ok(servicos).build();
     }
 
@@ -49,7 +59,14 @@ public class IndexController {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarBarbeirosPublicos() {
-        List<BarbeiroEntity> barbeiros = barbeiroBO.listarTodos();
+        List<BarbeiroResponseDTO> barbeiros = barbeiroBO.listarTodos().stream()
+                .map(e -> new BarbeiroResponseDTO(
+                    e.getId(),
+                    e.getNome(),
+                    e.getIniciais(),
+                    e.getEspecialidade()
+                ))
+                .toList();
         return Response.ok(barbeiros).build();
     }
 }

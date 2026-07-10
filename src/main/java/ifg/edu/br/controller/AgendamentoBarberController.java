@@ -4,7 +4,6 @@ import ifg.edu.br.model.bo.AgendamentoBO;
 import ifg.edu.br.model.bo.ServicosBO;
 import ifg.edu.br.model.dao.UsuarioDAO;
 import ifg.edu.br.model.dto.ServicoRequestDTO;
-import ifg.edu.br.model.dto.UsuarioDTO;
 import ifg.edu.br.model.entity.AgendamentoEntity;
 import ifg.edu.br.model.entity.UsuarioEntity;
 import io.quarkus.qute.CheckedTemplate;
@@ -16,9 +15,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import ifg.edu.br.model.dto.AgendamentoResponseDTO;
 
 @Path("/agendamentoBarbeiro")
-@RolesAllowed({"ADMINISTRADOR", "Barbeiro", "BARBEIRO"})
+@RolesAllowed({"ADMINISTRADOR", "Barbeiro"})
 public class AgendamentoBarberController {
 
     @Inject
@@ -43,8 +43,31 @@ public class AgendamentoBarberController {
             return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado.").build();
         }
         
-        List<AgendamentoEntity> agendamentos = agendamentoBO.listarAgendamentosDoBarbeiro(usuario.getNome());
-        return Response.ok(agendamentos).build();
+        List<AgendamentoEntity> agendamentos;
+        if (jwt.getGroups() != null && jwt.getGroups().contains("ADMINISTRADOR")) {
+            agendamentos = agendamentoBO.listarTodosAgendamentos();
+        } else {
+            agendamentos = agendamentoBO.listarAgendamentosDoBarbeiro(usuario.getNome());
+        }
+        
+        List<AgendamentoResponseDTO> dtos = agendamentos.stream()
+                .map(e -> new AgendamentoResponseDTO(
+                    e.getId(),
+                    e.getServico(),
+                    e.getValor(),
+                    e.getDescricao(),
+                    e.getBarbeiroNome(),
+                    e.getDataAgendamento(),
+                    e.getHoraAgendamento(),
+                    e.getCliente() != null ? new AgendamentoResponseDTO.ClienteResponseDTO(
+                        e.getCliente().getId(),
+                        e.getCliente().getNome(),
+                        e.getCliente().getEmail()
+                    ) : null
+                ))
+                .toList();
+                
+        return Response.ok(dtos).build();
     }
 
     @CheckedTemplate

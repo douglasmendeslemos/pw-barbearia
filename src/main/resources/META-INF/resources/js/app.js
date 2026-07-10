@@ -89,7 +89,7 @@ function renderServices() {
 
     // 2. Tenta preencher as opções do formulário (se o select existir na tela)
     if (serviceSelect) {
-        serviceSelect.innerHTML = services.map(service => `
+        serviceSelect.innerHTML = `<option value="" disabled selected>Selecione um serviço...</option>` + services.map(service => `
       <option value="${service.id}">${service.name} - ${money(service.price)}</option>
     `).join("");
     }
@@ -112,7 +112,7 @@ function renderBarbers() {
 
     // 2. Tenta preencher as opções do formulário
     if (barberSelect) {
-        barberSelect.innerHTML = barbers.map(barber => `
+        barberSelect.innerHTML = `<option value="" disabled selected>Selecione um barbeiro...</option>` + barbers.map(barber => `
       <option value="${barber.id}">${barber.name}</option>
     `).join("");
     }
@@ -120,7 +120,7 @@ function renderBarbers() {
 
 function renderTimes() {
     if (!bookingTime) return; // Only render if the booking time select exists
-    bookingTime.innerHTML = timeSlots.map(time => `<option value="${time}">${time}</option>`).join("");
+    bookingTime.innerHTML = `<option value="" disabled selected>Selecione um horário...</option>` + timeSlots.map(time => `<option value="${time}">${time}</option>`).join("");
 }
 
 function getService(id) {
@@ -169,7 +169,7 @@ function renderAppointments() {
 function resetForm() {
     if (bookingForm && bookingDate) {
         bookingForm.reset();
-        bookingDate.value = todayISO();
+        bookingDate.value = "";
         renderAppointments();
     }
 }
@@ -179,9 +179,9 @@ function handleSubmit(event) {
 
     const bookingNotesInput = document.querySelector("#bookingNotes");
 
-    // Verifica se os campos vitais para o sistema existem
-    if (!serviceSelect || !barberSelect || !bookingDate || !bookingTime) {
-        console.error("Faltam campos obrigatórios (Serviço, Barbeiro, Data ou Hora).");
+    // Verifica se os campos vitais para o sistema existem e estão preenchidos
+    if (!serviceSelect || !serviceSelect.value || !barberSelect || !barberSelect.value || !bookingDate || !bookingDate.value || !bookingTime || !bookingTime.value) {
+        console.error("Faltam campos obrigatórios (Serviço, Barbeiro, Data ou Hora) ou eles não foram preenchidos.");
         return;
     }
 
@@ -297,7 +297,7 @@ renderTimes();
 // Initialize date input if it exists
 if (bookingDate) {
     bookingDate.min = todayISO();
-    bookingDate.value = todayISO();
+    bookingDate.value = "";
 }
 
 async function logout() {
@@ -340,4 +340,19 @@ if (appointmentList) {
 
 if (clearSchedule) {
     clearSchedule.addEventListener("click", handleClear);
+}
+
+// Redireciona para o login se tentar acessar agendamento sem estar logado
+const heroActions = document.querySelector(".hero-actions");
+if (heroActions) {
+    const links = heroActions.querySelectorAll("a");
+    links.forEach(link => {
+        link.addEventListener("click", function(event) {
+            const perfil = sessionStorage.getItem("perfil");
+            if (!perfil) {
+                event.preventDefault();
+                window.location.href = "/auth";
+            }
+        });
+    });
 }

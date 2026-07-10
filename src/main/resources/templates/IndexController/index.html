@@ -9,7 +9,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="Barbearia D+">
-      <span class="brand-mark">BP</span>
+      <span class="brand-mark">BD+</span>
       <span>
         <strong>Barbearia D+</strong>
         <small>agenda online</small>
@@ -31,7 +31,7 @@
         <p class="hero-text">Escolha o serviço, o profissional e o melhor horário. O atendimento fica registrado no painel da barbearia.</p>
         <div class="hero-actions">
           <a class="button primary" href="/agendamentoUser">Agendar horário</a>
-          <a class="button ghost" href="#painel">Ver agenda do dia</a>
+          <a class="button ghost" href="/agendamentoUser">Ver agenda do dia</a>
         </div>
       </div>
 
@@ -65,156 +65,11 @@
       </div>
       <div class="barber-grid" id="barberGrid"></div>
     </section>
-
-      {!<section class="workspace" id="agenda" aria-labelledby="booking-title">!}
-{!!}
-          {!<form class="booking-panel" id="bookingForm">!}
-{!!}
-              {!<div class="section-heading compact">!}
-{!!}
-                  {!<p class="eyebrow">Novo horário</p>!}
-{!!}
-                  {!<h2 id="booking-title">Agendar atendimento</h2>!}
-{!!}
-              {!</div>!}
-{!!}
-{!!}
-{!!}
-              {!<label>!}
-{!!}
-                  {!Nome do cliente!}
-{!!}
-                  {!<input type="text" id="clientName" placeholder="Ex.: João Silva" autocomplete="name" required>!}
-{!!}
-              {!</label>!}
-{!!}
-{!!}
-{!!}
-              {!<label>!}
-{!!}
-                  {!Telefone!}
-{!!}
-                  {!<input type="tel" id="clientPhone" placeholder="(00) 00000-0000" autocomplete="tel" required>!}
-{!!}
-              {!</label>!}
-{!!}
-{!!}
-{!!}
-              {!<label>!}
-{!!}
-                  {!Serviço!}
-{!!}
-                  {!<select id="serviceSelect" required></select>!}
-{!!}
-              {!</label>!}
-{!!}
-{!!}
-{!!}
-              {!<label>!}
-{!!}
-                  {!Barbeiro!}
-{!!}
-                  {!<select id="barberSelect" required></select>!}
-{!!}
-              {!</label>!}
-{!!}
-{!!}
-{!!}
-              {!<div class="form-row">!}
-{!!}
-                  {!<label>!}
-{!!}
-                      {!Data!}
-{!!}
-                      {!<input type="date" id="bookingDate" required>!}
-{!!}
-                  {!</label>!}
-{!!}
-{!!}
-{!!}
-                  {!<label>!}
-{!!}
-                      {!Horário!}
-{!!}
-                      {!<select id="bookingTime" required></select>!}
-{!!}
-                  {!</label>!}
-{!!}
-              {!</div>!}
-{!!}
-{!!}
-{!!}
-              {!<label>!}
-{!!}
-                  {!Observações!}
-{!!}
-                  {!<textarea id="bookingNotes" rows="3" placeholder="Preferência de corte, alergias, detalhes do atendimento"></textarea>!}
-{!!}
-              {!</label>!}
-{!!}
-{!!}
-{!!}
-              {!<button class="button primary submit" type="submit">Confirmar agendamento</button>!}
-{!!}
-          {!</form>!}
-{!!}
-{!!}
-{!!}
-          {!<aside class="schedule-panel" id="painel" aria-labelledby="schedule-title">!}
-{!!}
-              {!<div class="schedule-header">!}
-{!!}
-                  {!<div>!}
-{!!}
-                      {!<p class="eyebrow">Painel</p>!}
-{!!}
-                      {!<h2 id="schedule-title">Agenda do dia</h2>!}
-{!!}
-                  {!</div>!}
-{!!}
-                  {!<button class="icon-button" id="clearSchedule" type="button" title="Limpar agenda" aria-label="Limpar agenda">!}
-{!!}
-                      {!×!}
-{!!}
-                  {!</button>!}
-{!!}
-              {!</div>!}
-{!!}
-{!!}
-{!!}
-              {!<div class="stats">!}
-{!!}
-                  {!<div>!}
-{!!}
-                      {!<strong id="totalAppointments">0</strong>!}
-{!!}
-                      {!<span>horários</span>!}
-{!!}
-                  {!</div>!}
-{!!}
-                  {!<div>!}
-{!!}
-                      {!<strong id="dayRevenue">R$ 0</strong>!}
-{!!}
-                      {!<span>previsto</span>!}
-{!!}
-                  {!</div>!}
-{!!}
-              {!</div>!}
-{!!}
-{!!}
-{!!}
-              {!<div class="appointment-list" id="appointmentList"></div>!}
-{!!}
-          {!</aside>!}
-{!!}
-      {!</section>!}
-
-
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="js/app.js"></script>
+  <script src="/js/menu.js"></script>
 </body>
 </html>
